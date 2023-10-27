@@ -10,6 +10,9 @@ public class Torneo {
     //fecha inscripcion (Date)
     //fecha cierre inscripcion (Date)
     private float inscripcion;
+
+    // individual o grupal 
+    
     
     
 }
