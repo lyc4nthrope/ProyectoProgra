@@ -17,9 +17,10 @@ public class Principal {
          * 
          * 1. en crear torneo se va a llamar al constructor por asi decirlo 
          * 
-         * 2. a. Añadir equipo 
-         *    b. cambiar fecha 
-         *    c. enfrentamientos 
+         * 2. a. Añadir equipo, cuando se unda añadir equipo se llama comparar fecha
+         *    b. modificar fechas
+         *    
+         * c. enfrentamientos 
          *    d. equipos 
          *    e. jueces 
          *    f. volver 
