@@ -128,23 +128,42 @@ public class Torneo {
     public void añadirEquipo() {
     if (aunFechaInscripcion()) {
         for (int i = 0; i < numeroJugadoresEquipo + 1; i++) {
-            String equipo = pedir("Nombre del equipo");
+
+            String textequipo = "Nombre del equipo";
             String textNombre = "Nombre Representante";
             String textEdad = "Edad del Represetante";
             String textEmail = "email del representante";
             String textTelefono = "Numero de celular del representante";
+            String textgenero = "1. Masculino\n 2. Femenino";
+            
             if (i != 0) {
                 textNombre = "Nombre del Jugador";
                 textEdad = "Edad del jugador";
                 textEmail = "Email del jugador";
                 textTelefono = "Numero de celular del jugador";
+                textgenero = "1. Masculino\n 2. Femenino";
+                
+                
             }
 
             String nombre = pedir(textNombre);
             int edad = Integer.parseInt(pedir(textEdad));
             String email = pedir(textEmail);
+            String telefono = pedir(textTelefono);
+            String equipo = pedir(textequipo);
+            int Xgenero = Integer.parseInt(textgenero);
             
+
             //GENERO MENU CON ENUM
+            
+            if (Xgenero == 1) {
+                genero = Genero.MASCULINO;
+
+                 
+            } else if (Xgenero == 2) {
+                genero = Genero.FEMENINO;
+                
+            }
 
             }
         }

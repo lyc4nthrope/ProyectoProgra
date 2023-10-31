@@ -3,7 +3,7 @@ public class Persona {
     private int edad;
     private String email;
     private String numeroCelular;
-    private Genero genero;
+    private Genero genero = null;
     
     public Persona(String nombre, int edad, String email, String numeroCelular, Genero genero) {
         this.nombre = nombre;
