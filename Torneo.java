@@ -169,7 +169,47 @@ public class Torneo {
         }
     }
 
-    
+    // modificar fechas
+
+
+
+    // enfrentamientos
+
+
+
+    // general
+
+
+
+    // buscar por equipos
+
+
+
+    // buscar por juez
+
+
+
+
+    // resultados
+
+
+
+
+    // modificar enfrentamientos
+
+
+
+    // ver equipos
+
+
+
+
+    // ver jueces
+
+
+
+
+
      
     public String pedir(String msj) {
         return JOptionPane.showInputDialog(null, msj);
