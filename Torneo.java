@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.swing.JOptionPane;
@@ -12,16 +13,16 @@ public class Torneo {
     private String tipoDeporte;
     private int numeroJugadoresEquipo;
     private Genero genero;
-    private Tipo tipoTorneo;
+    private TipoTorneo tipoTorneo;
     private LocalDate fechaInscripcion;
     private LocalDate fechaCierreInscripcion;
     private float valorInscripcion;
 
-    public (String nombreTorneo, LocalDate Torneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
-            Genero genero, Tipo tipoTorneo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
+    public Torneo(String nombreTorneo, LocalDate fechaTorneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
+            Genero genero, TipoTorneo tipoTorneo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
             float valorInscripcion) {
         this.nombreTorneo = nombreTorneo;
-        this.Torneo = Torneo;
+        this.fechaInicioTorneo = fechaTorneo;
         this.limiteEdad = limiteEdad;
         this.tipoDeporte = tipoDeporte;
         this.numeroJugadoresEquipo = numeroJugadoresEquipo;
@@ -36,9 +37,6 @@ public class Torneo {
         return equipos;
     }
 
-    public void setEquipos(ArrayList<ArrayList> equipos) {
-        this.equipos = equipos;
-    }
 
     public String getNombre() {
         return nombreTorneo;
@@ -49,11 +47,11 @@ public class Torneo {
     }
 
     public LocalDate getFechaInicio() {
-        return Torneo;
+        return fechaInicioTorneo;
     }
 
     public void setFechaInicio(LocalDate Torneo) {
-        this.Torneo = Torneo;
+        this.fechaInicioTorneo = Torneo;
     }
 
     public int getLimiteEdad() {
@@ -88,11 +86,11 @@ public class Torneo {
         this.genero = genero;
     }
 
-    public Tipo getTipo() {
+    public TipoTorneo getTipo() {
         return tipoTorneo;
     }
 
-    public void setTipo(Tipo tipoTorneo) {
+    public void setTipo(TipoTorneo tipoTorneo) {
         this.tipoTorneo = tipoTorneo;
     }
 
@@ -151,10 +149,10 @@ public class Torneo {
             }
 
             String nombre = pedir(textNombre);
-            int edad = Integer.parseInt(pedir(textEdad));
+            int edad = pedirInt(textEdad);
             String email = pedir(textEmail);
             String telefono = pedir(textTelefono);
-            String equipo = pedir(textequipo);
+            String nombreEquipo = pedir(textequipo);
             int Xgenero =0;
 
             do{
@@ -162,35 +160,51 @@ public class Torneo {
             }while(Xgenero !=1 || Xgenero!=2);
 
             //GENERO MENU CON ENUM
+            Genero generoPersona = genero;
             if (Xgenero == 1) {
-                Genero generoPersona = Genero.MASCULINO;             
-            } else if (Xgenero == 2) {
-                Genero generoPersona = Genero.FEMENINO;  
+                generoPersona = Genero.MASCULINO;             
+            } 
+            if (Xgenero == 2) {
+                generoPersona = Genero.FEMENINO;  
             }
-            
-            Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, equipo);
+            if (generoPersona==genero) {
+                Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, nombreEquipo);
             equipo.add(jugador);
+            }else{
+                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de "+genero);
+            }
+
             }
 
             equipos.add(equipo);
+
         }else{
-            JOptionPane.showMessajeDialog(null, "La fecha de valorInscripcion no han empezado o se han acabado");
+            JOptionPane.showMessageDialog(null, "La fecha de Inscripcion no han empezado o se han acabado");
         }
     }
 
     // modificar fechas
-    public void modificarFechas() {
-        JOptionPane.showMessageDialog(null,"ingrese la nueva fecha de inscripción");
-        fechaInscripcion = JOptionPane.showInputDialog("");
-        
-        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de cierre de valorInscripcion");
-        fechaCierreInscripcion = JOptionPane.showInputDialog("");
-
-        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de inicio del torneo");
-        Torneo = JOptionPane.showInputDialog("");
+    public void modificarFechaInicio() {
+        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el inicio del"+
+         "torneo en este orden y con las barras ty, YYYY/MM/DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
+        this.fechaInicioTorneo=fechaHecha;
     }
-
-
+    public void modificarFechaInicioInscripcion() {
+        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el inicio de inscripciones del"+
+         "torneo en este orden y con las barras ty, YYYY/MM/DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
+        this.fechaInscripcion=fechaHecha;
+    }
+    public void modificarFechaCierreInscripcion() {
+        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el cierre de inscripciones del"+
+         "torneo en este orden y con las barras ty, YYYY/MM/DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
+        this.fechaCierreInscripcion=fechaHecha;
+    }
     // enfrentamientos
 
 
@@ -234,11 +248,24 @@ public class Torneo {
     }
 
     public int pedirInt(String msj){
-        try{
-            return Integer.parseInt(pedir(msj));
-        }catch{
-            JOptionPane.showMessajeDialog(null, "Digite un numero correctamente");
+        int numero;
+        try {
+            numero=Integer.parseInt(pedir(msj));
+        } catch (Exception e) {
+            // TODO: handle exception
+            numero=pedirInt(msj);
         }
+        return numero;
+    }
 
+    public float pedirFloat(String msj){
+         float numero;
+        try {
+            numero=Float.parseFloat(pedir(msj));
+        } catch (Exception e) {
+            // TODO: handle exception
+            numero=pedirFloat(msj);
+        }
+        return numero;
     }
 }
