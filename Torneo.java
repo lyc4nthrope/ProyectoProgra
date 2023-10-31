@@ -3,30 +3,30 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
-public class Torneo {
+public class  {
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     
-    private String nombreTorneo;
+    private String nombre;
     private LocalDate fechaInicio;
     private int limiteEdad;
     private String tipoDeporte;
     private int numeroJugadoresEquipo;
     private Genero genero;
-    private TipoTorneo tipoTorneo;
+    private Tipo tipo;
     private LocalDate fechaInscripcion;
     private LocalDate fechaCierreInscripcion;
     private float inscripcion;
 
-    public Torneo(String nombreTorneo, LocalDate fechaInicio, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
-            Genero genero, TipoTorneo tipoTorneo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
+    public (String nombre, LocalDate fechaInicio, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
+            Genero genero, Tipo tipo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
             float inscripcion) {
-        this.nombreTorneo = nombreTorneo;
+        this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.limiteEdad = limiteEdad;
         this.tipoDeporte = tipoDeporte;
         this.numeroJugadoresEquipo = numeroJugadoresEquipo;
         this.genero = genero;
-        this.tipoTorneo = tipoTorneo;
+        this.tipo = tipo;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaCierreInscripcion = fechaCierreInscripcion;
         this.inscripcion = inscripcion;
@@ -40,12 +40,12 @@ public class Torneo {
         this.equipos = equipos;
     }
 
-    public String getNombreTorneo() {
-        return nombreTorneo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreTorneo(String nombreTorneo) {
-        this.nombreTorneo = nombreTorneo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public LocalDate getFechaInicio() {
@@ -88,12 +88,12 @@ public class Torneo {
         this.genero = genero;
     }
 
-    public TipoTorneo getTipoTorneo() {
-        return tipoTorneo;
+    public Tipo getTipo() {
+        return tipo;
     }
 
-    public void setTipoTorneo(TipoTorneo tipoTorneo) {
-        this.tipoTorneo = tipoTorneo;
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
     }
 
     public LocalDate getFechaInscripcion() {
@@ -140,10 +140,7 @@ public class Torneo {
                 textNombre = "Nombre del Jugador";
                 textEdad = "Edad del jugador";
                 textEmail = "Email del jugador";
-                textTelefono = "Numero de celular del jugador";
-                textgenero = "1. Masculino\n 2. Femenino";
-                
-                
+                textTelefono = "Numero de celular del jugador";           
             }
 
             String nombre = pedir(textNombre);
@@ -151,19 +148,19 @@ public class Torneo {
             String email = pedir(textEmail);
             String telefono = pedir(textTelefono);
             String equipo = pedir(textequipo);
-            int Xgenero = Integer.parseInt(textgenero);
-            
+            int Xgenero =0;
+
+            do{
+                Xgenero = Integer.parseInt(pedir(textgenero));
+            }while(Xgenero !=1 || Xgenero!=2);
 
             //GENERO MENU CON ENUM
-            
             if (Xgenero == 1) {
-                genero = Genero.MASCULINO;
-
-                 
+                Genero generoPersona = Genero.MASCULINO;             
             } else if (Xgenero == 2) {
-                genero = Genero.FEMENINO;
-                
+                Genero generoPersona = Genero.FEMENINO;  
             }
+            
 
             }
         }
