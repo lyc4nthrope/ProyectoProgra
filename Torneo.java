@@ -3,33 +3,33 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
-public class  {
+public class Torneo {
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     
-    private String nombre;
-    private LocalDate fechaInicio;
+    private String nombreTorneo;
+    private LocalDate fechaInicioTorneo;
     private int limiteEdad;
     private String tipoDeporte;
     private int numeroJugadoresEquipo;
     private Genero genero;
-    private Tipo tipo;
+    private Tipo tipoTorneo;
     private LocalDate fechaInscripcion;
     private LocalDate fechaCierreInscripcion;
-    private float inscripcion;
+    private float valorInscripcion;
 
-    public (String nombre, LocalDate fechaInicio, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
-            Genero genero, Tipo tipo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
-            float inscripcion) {
-        this.nombre = nombre;
-        this.fechaInicio = fechaInicio;
+    public (String nombreTorneo, LocalDate Torneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
+            Genero genero, Tipo tipoTorneo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
+            float valorInscripcion) {
+        this.nombreTorneo = nombreTorneo;
+        this.Torneo = Torneo;
         this.limiteEdad = limiteEdad;
         this.tipoDeporte = tipoDeporte;
         this.numeroJugadoresEquipo = numeroJugadoresEquipo;
         this.genero = genero;
-        this.tipo = tipo;
+        this.tipoTorneo = tipoTorneo;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaCierreInscripcion = fechaCierreInscripcion;
-        this.inscripcion = inscripcion;
+        this.valorInscripcion = valorInscripcion;
     }
 
     public ArrayList<ArrayList> getEquipos() {
@@ -41,19 +41,19 @@ public class  {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombreTorneo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombreTorneo) {
+        this.nombreTorneo = nombreTorneo;
     }
 
     public LocalDate getFechaInicio() {
-        return fechaInicio;
+        return Torneo;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaInicio(LocalDate Torneo) {
+        this.Torneo = Torneo;
     }
 
     public int getLimiteEdad() {
@@ -89,11 +89,11 @@ public class  {
     }
 
     public Tipo getTipo() {
-        return tipo;
+        return tipoTorneo;
     }
 
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+    public void setTipo(Tipo tipoTorneo) {
+        this.tipoTorneo = tipoTorneo;
     }
 
     public LocalDate getFechaInscripcion() {
@@ -113,11 +113,11 @@ public class  {
     }
 
     public float getInscripcion() {
-        return inscripcion;
+        return valorInscripcion;
     }
 
-    public void setInscripcion(float inscripcion) {
-        this.inscripcion = inscripcion;
+    public void setInscripcion(float valorInscripcion) {
+        this.valorInscripcion = valorInscripcion;
     }
 
     
@@ -125,8 +125,15 @@ public class  {
         return LocalDate.now().isAfter(fechaCierreInscripcion);
     }
     
+    public boolean abiertaInscripcion(){
+        return LocalDate.now().isBefore(fechaInscripcion);
+    }
+
     public void añadirEquipo() {
-    if (aunFechaInscripcion()) {
+    if (aunFechaInscripcion() && abiertaInscripcion()) {
+
+        ArrayList <Representante> equipo = new ArrayList <>();
+
         for (int i = 0; i < numeroJugadoresEquipo + 1; i++) {
 
             String textequipo = "Nombre del equipo";
@@ -161,8 +168,13 @@ public class  {
                 Genero generoPersona = Genero.FEMENINO;  
             }
             
-
+            Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, equipo);
+            equipo.add(jugador);
             }
+
+            equipos.add(equipo);
+        }else{
+            JOptionPane.showMessajeDialog(null, "La fecha de valorInscripcion no han empezado o se han acabado");
         }
     }
 
@@ -171,13 +183,12 @@ public class  {
         JOptionPane.showMessageDialog(null,"ingrese la nueva fecha de inscripción");
         fechaInscripcion = JOptionPane.showInputDialog("");
         
-        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de cierre de inscripcion");
+        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de cierre de valorInscripcion");
         fechaCierreInscripcion = JOptionPane.showInputDialog("");
 
         JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de inicio del torneo");
-        fechaInicio = JOptionPane.showInputDialog("");
+        Torneo = JOptionPane.showInputDialog("");
     }
-
 
 
     // enfrentamientos
@@ -214,9 +225,20 @@ public class  {
     // ver jueces
 
 
+
+
+
      
     public String pedir(String msj) {
         return JOptionPane.showInputDialog(null, msj);
     }
 
+    public int pedirInt(String msj){
+        try{
+            return Integer.parseInt(pedir(msj));
+        }catch{
+            JOptionPane.showMessajeDialog(null, "Digite un numero correctamente");
+        }
+
+    }
 }
