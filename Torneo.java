@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Torneo {
+    private ArrayList<ArrayList> contrincantes = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     
     private String nombreTorneo;
@@ -31,6 +32,19 @@ public class Torneo {
         this.fechaInscripcion = fechaInscripcion;
         this.fechaCierreInscripcion = fechaCierreInscripcion;
         this.valorInscripcion = valorInscripcion;
+    }
+    
+    public Torneo(ArrayList<ArrayList> contrincantes) {
+        this.contrincantes = contrincantes;
+    }
+
+    
+    public ArrayList<ArrayList> getContrincantes() {
+        return contrincantes;
+    }
+
+    public void setContrincantes(ArrayList<ArrayList> contrincantes) {
+        this.contrincantes = contrincantes;
     }
 
     public ArrayList<ArrayList> getEquipos() {
@@ -207,11 +221,14 @@ public class Torneo {
     }
     // enfrentamientos
     public void crearEnfrentamientos() {
-        
+
 
     }
     
+    
     public void contrincantes() {
+        
+
         
     }
 
