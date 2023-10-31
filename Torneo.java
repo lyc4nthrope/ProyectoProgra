@@ -223,11 +223,13 @@ public class Torneo {
     public void crearEnfrentamientos() {
 
 
+
     }
     
     
     public void contrincantes() {
         
+
 
         
     }
@@ -277,7 +279,8 @@ public class Torneo {
         int numero;
         try {
             numero=Integer.parseInt(pedir(msj));
-        } catch (Exception e) {
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Error: No ha ingresado un número entero válido.");
             // TODO: handle exception
             numero=pedirInt(msj);
         }
@@ -288,7 +291,8 @@ public class Torneo {
          float numero;
         try {
             numero=Float.parseFloat(pedir(msj));
-        } catch (Exception e) {
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Error: No ha ingresado un número decimal válido.");
             // TODO: handle exception
             numero=pedirFloat(msj);
         }
