@@ -206,6 +206,15 @@ public class Torneo {
         this.fechaCierreInscripcion=fechaHecha;
     }
     // enfrentamientos
+    public void crearEnfrentamientos() {
+        
+
+    }
+    
+    public void contrincantes() {
+        
+    }
+
 
 
 
