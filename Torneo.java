@@ -220,7 +220,16 @@ public class Torneo {
         this.fechaCierreInscripcion=fechaHecha;
     }
     // enfrentamientos
+
     public void crearEnfrentamientos() {
+        while (int i = 0;equipos.size();i++) {
+
+            JOptionPane.showInputDialog(null,"");
+            //creo q es asi pero no se si esta bn
+            
+        }
+
+      
 
 
 
