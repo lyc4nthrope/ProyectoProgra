@@ -170,6 +170,16 @@ public class Torneo {
     }
 
     // modificar fechas
+    public void modificarFechas() {
+        JOptionPane.showMessageDialog(null,"ingrese la nueva fecha de inscripción");
+        fechaInscripcion = JOptionPane.showInputDialog("");
+        
+        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de cierre de inscripcion");
+        fechaCierreInscripcion = JOptionPane.showInputDialog("");
+
+        JOptionPane.showMessageDialog(null, "ingrese la nueva fecha de inicio del torneo");
+        fechaInicio = JOptionPane.showInputDialog("");
+    }
 
 
 
@@ -205,9 +215,6 @@ public class Torneo {
 
 
     // ver jueces
-
-
-
 
 
      
