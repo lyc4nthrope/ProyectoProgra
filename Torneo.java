@@ -228,11 +228,13 @@ public class Torneo {
     // enfrentamientos
 
     public void crearEnfrentamientos() {
-        
+
+        String texto;
 
         for (int i = 0; i < nombresEquipos.size(); i++) {
             
-            
+            texto = nombresEquipos.get(i + 1);
+            //faltan dos cosas
         }
       
 
