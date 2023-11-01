@@ -34,19 +34,7 @@ public class Torneo {
         this.fechaCierreInscripcion = fechaCierreInscripcion;
         this.valorInscripcion = valorInscripcion;
     }
-    
-    public Torneo(ArrayList<ArrayList> contrincantes) {
-        this.contrincantes = contrincantes;
-    }
 
-    
-    public ArrayList<ArrayList> getContrincantes() {
-        return contrincantes;
-    }
-
-    public void setContrincantes(ArrayList<ArrayList> contrincantes) {
-        this.contrincantes = contrincantes;
-    }
 
     public ArrayList<ArrayList> getEquipos() {
         return equipos;
@@ -229,13 +217,20 @@ public class Torneo {
 
     public void crearEnfrentamientos() {
 
-        String texto;
-
         for (int i = 0; i < nombresEquipos.size(); i++) {
+
+            int op = Integer.parseInt(JOptionPane.showInputDialog(null, i + 1 + nombresEquipos.get(i)));
             
-            texto = nombresEquipos.get(i + 1);
-            //faltan dos cosas
+            do {
+                if (op == 1) {
+
+                }
+                
+            } while (op != nombresEquipos.size());
+
         }
+        
+
       
 
     
