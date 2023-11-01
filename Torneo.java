@@ -217,16 +217,26 @@ public class Torneo {
 
     public void crearEnfrentamientos() {
 
+        String texto;
+
         for (int i = 0; i < nombresEquipos.size(); i++) {
 
-            int op = Integer.parseInt(JOptionPane.showInputDialog(null, i + 1 + nombresEquipos.get(i)));
+            texto = nombresEquipos.get(i);
+
+            int xd = Integer.parseInt(JOptionPane.showInputDialog(i + 1 + texto));
             
             do {
-                if (op == 1) {
 
-                }
+                //menu no se xd
                 
-            } while (op != nombresEquipos.size());
+            } while (xd != nombresEquipos.size());
+
+
+
+
+
+
+
 
         }
         
