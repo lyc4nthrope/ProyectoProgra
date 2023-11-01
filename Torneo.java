@@ -5,7 +5,8 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Torneo {
-    private ArrayList<ArrayList> contrincantes = new ArrayList<>();
+    private ArrayList<ArrayList> enfrentamientos = new ArrayList<>();
+    private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     
     private String nombreTorneo;
@@ -146,9 +147,10 @@ public class Torneo {
 
         ArrayList <Representante> equipo = new ArrayList <>();
 
+         String nombreEquipo = pedir("Nombre del equipo");
+
         for (int i = 0; i < numeroJugadoresEquipo + 1; i++) {
 
-            String textequipo = "Nombre del equipo";
             String textNombre = "Nombre Representante";
             String textEdad = "Edad del Represetante";
             String textEmail = "email del representante";
@@ -166,7 +168,7 @@ public class Torneo {
             int edad = pedirInt(textEdad);
             String email = pedir(textEmail);
             String telefono = pedir(textTelefono);
-            String nombreEquipo = pedir(textequipo);
+           
             int Xgenero =0;
 
             do{
@@ -183,13 +185,17 @@ public class Torneo {
             }
             if (generoPersona==genero) {
                 Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, nombreEquipo);
-            equipo.add(jugador);
+                equipo.add(jugador);
+                
             }else{
-                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de "+genero);
+                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);
+
+                
             }
 
             }
-
+            
+            nombresEquipos.add(nombreEquipo);
             equipos.add(equipo);
 
         }else{
@@ -222,17 +228,15 @@ public class Torneo {
     // enfrentamientos
 
     public void crearEnfrentamientos() {
-        while (int i = 0;equipos.size();i++) {
+        
 
-            JOptionPane.showInputDialog(null,"");
-            //creo q es asi pero no se si esta bn
+        for (int i = 0; i < nombresEquipos.size(); i++) {
+            
             
         }
-
       
 
-
-
+    
     }
     
     
