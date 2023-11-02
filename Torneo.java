@@ -225,10 +225,8 @@ public class Torneo {
             xd = nombresEquipos.get(i);
             elemento = (i + 1) + ". " + xd;
 
-            xd = nombresEquipos.get(i++);
-            elemento = "\n" + elemento;
-            
-                
+            elemento = elemento + "\n" + (i + 1) + ". " + nombresEquipos.get(i);
+
         }
         
       
