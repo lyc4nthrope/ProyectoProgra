@@ -3,9 +3,11 @@ import java.util.zip.DataFormatException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+
 import javax.swing.JOptionPane;
 
 public class Prueba {
+    
 
     public static void main(String[] args) {
         int numero= pedirInt("hola");
@@ -23,14 +25,19 @@ public class Prueba {
         return JOptionPane.showInputDialog(null, msj);
     }
 
-    public static int pedirInt(String msj){
+    public static int pedirInt(String msj) {
         int numero;
         try {
-            numero=Integer.parseInt(pedir(msj));
+            numero = Integer.parseInt(pedir(msj));
         } catch (Exception e) {
             // TODO: handle exception
-            numero=pedirInt(msj);
+            numero = pedirInt(msj);
         }
         return numero;
     }
+
+
+    
+
+
 }
