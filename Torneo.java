@@ -217,18 +217,15 @@ public class Torneo {
 
     public void crearEnfrentamientos() {
 
-        
+        String xd;
+        String elemento;
 
         for (int i = 0; i < nombresEquipos.size(); i++) {
 
-            String xd = nombresEquipos.get(i);
+            xd = nombresEquipos.get(i);
+            elemento = (i + 1) + ". " + xd;
 
-            String elemento = (i + 1) + ". " + xd;
-
-             
-
-
-
+            
         }
         
         
