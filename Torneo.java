@@ -222,14 +222,17 @@ public class Torneo {
         for (int i = 0; i < nombresEquipos.size(); i++) {
 
             String xd = nombresEquipos.get(i);
-            
-            JOptionPane.showMessageDialog(null,i+1+"." +xd);
+
+            String elemento = (i + 1) + ". " + xd;
+
+             
+
+
 
         }
         
-
-      
-
+        
+        
     
     }
     
