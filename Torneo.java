@@ -8,6 +8,7 @@ public class Torneo {
     private ArrayList<ArrayList> enfrentamientos = new ArrayList<>();
     private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
+    private ArrayList<Jurado> jurados = new ArrayList<>();
     
     private String nombreTorneo;
     private LocalDate fechaInicioTorneo;
@@ -193,50 +194,97 @@ public class Torneo {
 
     // modificar fechas
     public void modificarFechaInicio() {
-        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el inicio del"+
-         "torneo en este orden y con las barras ty, YYYY/MM/DD");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
-        this.fechaInicioTorneo=fechaHecha;
+        this.fechaInicioTorneo = pedirFecha("ingrese la nueva fecha de incio del torneo: ");
     }
+
     public void modificarFechaInicioInscripcion() {
-        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el inicio de inscripciones del"+
-         "torneo en este orden y con las barras ty, YYYY/MM/DD");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
-        this.fechaInscripcion=fechaHecha;
+        
+        this.fechaInscripcion= pedirFecha("ingrese la nueva fecha de inicio de inscripcion: "); 
+     
     }
+
     public void modificarFechaCierreInscripcion() {
-        String fecha = JOptionPane.showInputDialog(null, "ingrese la nueva fecha para el cierre de inscripciones del"+
-         "torneo en este orden y con las barras ty, YYYY/MM/DD");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
-        this.fechaCierreInscripcion=fechaHecha;
+        this.fechaCierreInscripcion = pedirFecha("ingrese la nueva fecha de cierre de inscripcion: ");
     }
     // enfrentamientos
 
     public void crearEnfrentamientos() {
-
-        String xd;
-        String elemento;
+        String elemento = "";
 
         for (int i = 0; i < nombresEquipos.size(); i++) {
-
-            xd = nombresEquipos.get(i);
-            elemento = (i + 1) + ". " + xd;
 
             elemento = elemento + "\n" + (i + 1) + ". " + nombresEquipos.get(i);
 
         }
+
+        int op = pedirInt("ingrese el numero del primer equipo: \n " + elemento);
+        int opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento);
+
+        do {
+            opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento);
+
+        } while (op == opp);
+
+        LocalDate fechaEnfrantamiento = pedirFecha("ingrese la fecha del enfrentamiento: ");
+
+        String lugar = pedir("ingrese el lugar del engrentamiento: ");
+
+
+        String listanombres = "";
+
+        for (int i = 0; i < jurados.size(); i++) {
+
+            listanombres = listanombres + "\n" + (i + 1) + ". " + jurados.get(i).getNombre();
+
+
+        }
+
+        int numeroJurados = pedirInt("ingrese el numero de jurados de este torneo:");
+
+        ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
+
+        for (int i = 0; i < numeroJurados; i++) {
+
+            int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados);
+
+            boolean sta = true;
+
+            for (int j = 0; j < juradosEnfrentamiento.size() && sta; j++) {
+
+                if (juradosEnfrentamiento.get(j).getNombre().equals(jurados.get(numeroIndiceJurado - 1).getNombre())) {
+                    JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
+
+                } else {
+                    juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado - 1));
+                }
+
+            }
+
+        }
         
-      
+
+
+
+
+    
+
+
+        
+
+
+
+
     }
     
     
-    public void contrincantes() {
-        
+    
+    //pedir fecha
+    public LocalDate pedirFecha(String msj) {
 
-
+        String fecha = JOptionPane.showInputDialog(null, msj +"en este orden y con las barras ty, YYYY/MM/DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
+        return fechaHecha;
         
     }
 
