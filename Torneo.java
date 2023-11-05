@@ -1,4 +1,4 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -11,18 +11,18 @@ public class Torneo {
     private ArrayList<Jurado> jurados = new ArrayList<>();
     
     private String nombreTorneo;
-    private LocalDate fechaInicioTorneo;
+    private LocalDateTime fechaInicioTorneo;
     private int limiteEdad;
     private String tipoDeporte;
     private int numeroJugadoresEquipo;
     private Genero genero;
     private TipoTorneo tipoTorneo;
-    private LocalDate fechaInscripcion;
-    private LocalDate fechaCierreInscripcion;
+    private LocalDateTime fechaInscripcion;
+    private LocalDateTime fechaCierreInscripcion;
     private float valorInscripcion;
 
-    public Torneo(String nombreTorneo, LocalDate fechaTorneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
-            Genero genero, TipoTorneo tipoTorneo, LocalDate fechaInscripcion, LocalDate fechaCierreInscripcion,
+    public Torneo(String nombreTorneo, LocalDateTime fechaTorneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
+            Genero genero, TipoTorneo tipoTorneo, LocalDateTime fechaInscripcion, LocalDateTime fechaCierreInscripcion,
             float valorInscripcion) {
         this.nombreTorneo = nombreTorneo;
         this.fechaInicioTorneo = fechaTorneo;
@@ -50,11 +50,11 @@ public class Torneo {
         this.nombreTorneo = nombreTorneo;
     }
 
-    public LocalDate getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicioTorneo;
     }
 
-    public void setFechaInicio(LocalDate Torneo) {
+    public void setFechaInicio(LocalDateTime Torneo) {
         this.fechaInicioTorneo = Torneo;
     }
 
@@ -98,19 +98,19 @@ public class Torneo {
         this.tipoTorneo = tipoTorneo;
     }
 
-    public LocalDate getFechaInscripcion() {
+    public LocalDateTime getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+    public void setFechaInscripcion(LocalDateTime fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public LocalDate getFechaCierreInscripcion() {
+    public LocalDateTime getFechaCierreInscripcion() {
         return fechaCierreInscripcion;
     }
 
-    public void setFechaCierreInscripcion(LocalDate fechaCierreInscripcion) {
+    public void setFechaCierreInscripcion(LocalDateTime fechaCierreInscripcion) {
         this.fechaCierreInscripcion = fechaCierreInscripcion;
     }
 
@@ -124,11 +124,11 @@ public class Torneo {
 
     
     public boolean aunFechaInscripcion() {
-        return LocalDate.now().isAfter(fechaCierreInscripcion);
+        return LocalDateTime.now().isAfter(fechaCierreInscripcion);
     }
     
     public boolean abiertaInscripcion(){
-        return LocalDate.now().isBefore(fechaInscripcion);
+        return LocalDateTime.now().isBefore(fechaInscripcion);
     }
 
     public void añadirEquipo() {
@@ -194,17 +194,17 @@ public class Torneo {
 
     // modificar fechas
     public void modificarFechaInicio() {
-        this.fechaInicioTorneo = pedirFecha("ingrese la nueva fecha de incio del torneo: ");
+        this.fechaInicioTorneo = pedirFechaHora("ingrese la nueva fecha de inicio y hora del torneo:  ");
     }
 
     public void modificarFechaInicioInscripcion() {
         
-        this.fechaInscripcion= pedirFecha("ingrese la nueva fecha de inicio de inscripcion: "); 
+        this.fechaInscripcion= pedirFechaHora("ingrese la nueva fecha de inicio de inscripcion y hora del torneo: "); 
      
     }
 
     public void modificarFechaCierreInscripcion() {
-        this.fechaCierreInscripcion = pedirFecha("ingrese la nueva fecha de cierre de inscripcion: ");
+        this.fechaCierreInscripcion = pedirFechaHora("ingrese la nueva fecha de cierre de inscripcion y hora del torneo: ");
     }
     // enfrentamientos
 
@@ -225,9 +225,9 @@ public class Torneo {
 
         } while (op == opp);
 
-        LocalDate fechaEnfrantamiento = pedirFecha("ingrese la fecha del enfrentamiento: ");
+        LocalDateTime fechaEnfrantamiento = pedirFechaHora("ingrese la fecha del enfrentamiento y hora del torneo: ");
 
-        String lugar = pedir("ingrese el lugar del engrentamiento: ");
+        String lugar = pedir("ingrese el lugar del enfrentamiento: ");
 
 
         String listanombres = "";
@@ -279,14 +279,15 @@ public class Torneo {
     
     
     //pedir fecha
-    public LocalDate pedirFecha(String msj) {
+    public LocalDateTime pedirFechaHora(String msj) {
 
-        String fecha = JOptionPane.showInputDialog(null, msj +"en este orden y con las barras ty, YYYY/MM/DD");
+        String fecha = JOptionPane.showInputDialog(null, msj + "en este orden y con las barras ty, YYYY/MM/DD, HH :mm");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaHecha = LocalDate.parse(fecha, formatter);
+        LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
         return fechaHecha;
-        
+
     }
+
 
 
 
