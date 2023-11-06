@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import javax.swing.JOptionPane;
 
 public class Torneo {
@@ -221,7 +220,7 @@ public class Torneo {
         int opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento);
 
         do {
-            opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento);
+            opp = pedirInt("ingrese el numero del n equipo: \n " + elemento);
 
         } while (op == opp);
 
@@ -261,18 +260,12 @@ public class Torneo {
             }
 
         }
-        
 
+        //general todos los enfrentamientos q hay
 
 
 
     
-
-
-        
-
-
-
 
     }
     
