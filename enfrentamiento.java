@@ -1,16 +1,17 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.*;
+import java.util.*;
 
-public class enfrentamiento {
-    private LocalDate fechainicio;
+public class Enfrentamiento {
+    private LocalDateTime fechaInicio;
     private ArrayList<ArrayList> contrincantes;
     private ArrayList<Jurado> jueces;
     private String lugar;
     private int[] resultados = new int[3];
     private TipoEnfrentamiento tipoEnfrentamiento;
-    public enfrentamiento(LocalDate fechainicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
+
+    public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
             String lugar, int[] resultados, TipoEnfrentamiento tipoEnfrentamiento) {
-        this.fechainicio = fechainicio;
+        this.fechaInicio = fechaInicio;
         this.contrincantes = contrincantes;
         this.jueces = jueces;
         this.lugar = lugar;
@@ -18,11 +19,11 @@ public class enfrentamiento {
         this.tipoEnfrentamiento = tipoEnfrentamiento;
 
     }
-    public LocalDate getFechainicio() {
-        return fechainicio;
+    public LocalDateTime getFechainicio() {
+        return fechaInicio;
     }
-    public void setFechainicio(LocalDate fechainicio) {
-        this.fechainicio = fechainicio;
+    public void setFechainicio(LocalDateTime fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
     public ArrayList<ArrayList> getContrincantes() {
         return contrincantes;

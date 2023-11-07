@@ -10,32 +10,41 @@ public class Prueba {
     
 
     public static void main(String[] args) {
-        int numero= pedirInt("hola");
-        String fecha = JOptionPane.showInputDialog(null, "YYYY/MM/DD");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaCierreInscripcion = LocalDate.parse(fecha, formatter);
-        System.out.println(sePasoFechaInscripcion(fechaCierreInscripcion)+"");
+        LocalDateTime num=pedirFechaHora("Fecha", null);
+        System.out.println(num);
+       
     }
 
     public static boolean sePasoFechaInscripcion(LocalDate fechaCierreInscripcion) {
         return LocalDate.now().isAfter(fechaCierreInscripcion);
     }
 
-    public static String pedir(String msj) {
-        return JOptionPane.showInputDialog(null, msj);
+    public static String pedir(String msj, String text) {
+        return JOptionPane.showInputDialog(null, msj, text);
     }
 
-    public static int pedirInt(String msj) {
-        int numero;
+    public static int pedirInt(String msj, String text) {
+        String numero=pedir(msj, text);
         try {
-            numero = Integer.parseInt(pedir(msj));
+            int numTrue = Integer.parseInt(numero);
+            return numTrue;
         } catch (Exception e) {
             // TODO: handle exception
-            numero = pedirInt(msj);
+            return pedirInt("Error al ingresar\n"+msj, numero);
         }
-        return numero;
     }
+    public static LocalDateTime pedirFechaHora(String msj, String text) {
+        String fecha = JOptionPane.showInputDialog(null, msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
+        LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
+        return fechaHecha;
+        } catch (Exception e) {
+            return pedirFechaHora("Error al ingresar, intente de nuevo\n"+msj, fecha);
+        }
+        
 
+    }
 
     
 

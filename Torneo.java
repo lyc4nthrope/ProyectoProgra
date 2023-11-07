@@ -4,7 +4,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Torneo {
-    private ArrayList<ArrayList> enfrentamientos = new ArrayList<>();
+    private ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
     private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     private ArrayList<Jurado> jurados = new ArrayList<>();
@@ -135,7 +135,7 @@ public class Torneo {
 
         ArrayList <Representante> equipo = new ArrayList <>();
 
-         String nombreEquipo = pedir("Nombre del equipo");
+         String nombreEquipo = pedir("Nombre del equipo", null);
 
         for (int i = 0; i < numeroJugadoresEquipo + 1; i++) {
 
@@ -152,15 +152,15 @@ public class Torneo {
                 textTelefono = "Numero de celular del jugador";           
             }
 
-            String nombre = pedir(textNombre);
-            int edad = pedirInt(textEdad);
-            String email = pedir(textEmail);
-            String telefono = pedir(textTelefono);
+            String nombre = pedir(textNombre, null);
+            int edad = pedirInt(textEdad, null);
+            String email = pedir(textEmail, null);
+            String telefono = pedir(textTelefono, null);
            
             int Xgenero =0;
 
             do{
-                Xgenero = Integer.parseInt(pedir(textgenero));
+                Xgenero = Integer.parseInt(pedir(textgenero, null));
             }while(Xgenero !=1 || Xgenero!=2);
 
             //GENERO MENU CON ENUM
@@ -193,40 +193,45 @@ public class Torneo {
 
     // modificar fechas
     public void modificarFechaInicio() {
-        this.fechaInicioTorneo = pedirFechaHora("ingrese la nueva fecha de inicio y hora del torneo:  ");
+        this.fechaInicioTorneo = pedirFechaHora("ingrese la nueva fecha de inicio y hora del torneo:  ", null);
     }
 
     public void modificarFechaInicioInscripcion() {
         
-        this.fechaInscripcion= pedirFechaHora("ingrese la nueva fecha de inicio de inscripcion y hora del torneo: "); 
+        this.fechaInscripcion= pedirFechaHora("ingrese la nueva fecha de inicio de inscripcion y hora del torneo: ", null); 
      
     }
 
     public void modificarFechaCierreInscripcion() {
-        this.fechaCierreInscripcion = pedirFechaHora("ingrese la nueva fecha de cierre de inscripcion y hora del torneo: ");
+        this.fechaCierreInscripcion = pedirFechaHora("ingrese la nueva fecha de cierre de inscripcion y hora del torneo: ", null);
     }
     // enfrentamientos
 
     public void crearEnfrentamientos() {
         String elemento = "";
 
+        //pedir los contrincantes de los equipos en el torneo
         for (int i = 0; i < nombresEquipos.size(); i++) {
 
             elemento = elemento + "\n" + (i + 1) + ". " + nombresEquipos.get(i);
 
         }
 
-        int op = pedirInt("ingrese el numero del primer equipo: \n " + elemento);
-        int opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento);
+        int op = pedirInt("ingrese el numero del primer equipo: \n " + elemento, null);
+        int opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento, null);
 
         do {
-            opp = pedirInt("ingrese el numero del n equipo: \n " + elemento);
+            opp = pedirInt("ingrese el numero del n equipo: \n " + elemento, null);
 
         } while (op == opp);
+        ArrayList contrincantes = new ArrayList<>();
+        contrincantes.add(equipos.get(op-1));
+        contrincantes.add(equipos.get(opp-1));
 
-        LocalDateTime fechaEnfrantamiento = pedirFechaHora("ingrese la fecha del enfrentamiento y hora del torneo: ");
 
-        String lugar = pedir("ingrese el lugar del enfrentamiento: ");
+        LocalDateTime fechaEnfrantamiento = pedirFechaHora("Ingrese la fecha del enfrentamiento y hora del torneo: ", null);
+
+        String lugar = pedir("ingrese el lugar del enfrentamiento: ", null);
 
 
         String listanombres = "";
@@ -238,46 +243,50 @@ public class Torneo {
 
         }
 
-        int numeroJurados = pedirInt("ingrese el numero de jurados de este torneo:");
+        int numeroJurados = pedirInt("ingrese el numero de jurados para este enfrentamiento:", null);
 
         ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
 
-        for (int i = 0; i < numeroJurados; i++) {
+        //pedir escoger los jurados de los jurados en el tornero
+        for (int i = 0; juradosEnfrentamiento.size() < numeroJurados; i++) {
 
-            int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados);
+            int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados, null);
 
-            boolean sta = true;
+            boolean sta = false;
 
-            for (int j = 0; j < juradosEnfrentamiento.size() && sta; j++) {
+            //revision si ya esta ese jurado
+            for (int j = 0; j < juradosEnfrentamiento.size() && !sta; j++) {
 
                 if (juradosEnfrentamiento.get(j).getNombre().equals(jurados.get(numeroIndiceJurado - 1).getNombre())) {
-                    JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
-
-                } else {
-                    juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado - 1));
+                    sta=true;
                 }
-
             }
-
+            if (sta) {
+                JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
+            }else{
+                juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado-1));
+            }
         }
+        int [] resultados ={0,0,0};
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE);
+        enfrentamientos.add(enfrentamiento);
 
         //general todos los enfrentamientos q hay
 
 
 
-    
-
     }
-    
-    
-    
     //pedir fecha
-    public LocalDateTime pedirFechaHora(String msj) {
-
-        String fecha = JOptionPane.showInputDialog(null, msj + "en este orden y con las barras ty, YYYY/MM/DD, HH :mm");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public LocalDateTime pedirFechaHora(String msj, String text) {
+        String fecha = JOptionPane.showInputDialog(null, msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
         LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
         return fechaHecha;
+        } catch (Exception e) {
+            return pedirFechaHora("Error al ingresar, intente de nuevo\n"+msj, fecha);
+        }
+        
 
     }
 
@@ -319,31 +328,28 @@ public class Torneo {
 
 
      
-    public String pedir(String msj) {
-        return JOptionPane.showInputDialog(null, msj);
+    public static String pedir(String msj, String text) {
+        return JOptionPane.showInputDialog(null, msj, text);
+    }
+    public static int pedirInt(String msj, String text) {
+        String numero=pedir(msj, text);
+        try {
+            int numTrue = Integer.parseInt(numero);
+            return numTrue;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return pedirInt("Error al ingresae\n"+msj, numero);
+        }
     }
 
-    public int pedirInt(String msj){
-        int numero;
+    public float pedirFloat(String msj, String text){
+         String numero = pedir(msj, text);
         try {
-            numero=Integer.parseInt(pedir(msj));
+            float numTrue=Float.parseFloat(numero);
+            return numTrue;
         } catch (java.util.InputMismatchException e) {
-            System.out.println("Error: No ha ingresado un número entero válido.");
             // TODO: handle exception
-            numero=pedirInt(msj);
+            return pedirFloat("Error al ingresar\n"+msj, numero);
         }
-        return numero;
-    }
-
-    public float pedirFloat(String msj){
-         float numero;
-        try {
-            numero=Float.parseFloat(pedir(msj));
-        } catch (java.util.InputMismatchException e) {
-            System.out.println("Error: No ha ingresado un número decimal válido.");
-            // TODO: handle exception
-            numero=pedirFloat(msj);
-        }
-        return numero;
     }
 }
