@@ -1,3 +1,3 @@
 public enum Genero {
-    MASCULINO, FEMENINO
+    MASCULINO, FEMENINO, MIXTO;
 }

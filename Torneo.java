@@ -137,7 +137,7 @@ public class Torneo {
 
          String nombreEquipo = pedir("Nombre del equipo", null);
 
-        for (int i = 0; i < numeroJugadoresEquipo + 1; i++) {
+        for (int i = 0; equipo.size() < numeroJugadoresEquipo + 1; i++) {
 
             String textNombre = "Nombre Representante";
             String textEdad = "Edad del Represetante";
@@ -164,21 +164,19 @@ public class Torneo {
             }while(Xgenero !=1 || Xgenero!=2);
 
             //GENERO MENU CON ENUM
-            Genero generoPersona = genero;
+            Genero generoPersona = null;
             if (Xgenero == 1) {
                 generoPersona = Genero.MASCULINO;             
             } 
             if (Xgenero == 2) {
                 generoPersona = Genero.FEMENINO;  
             }
-            if (generoPersona==genero) {
+            if (generoPersona==genero || genero==Genero.MIXTO) {
                 Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, nombreEquipo);
                 equipo.add(jugador);
                 
             }else{
-                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);
-
-                
+                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);          
             }
 
             }
@@ -247,7 +245,7 @@ public class Torneo {
 
         ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
 
-        //pedir escoger los jurados de los jurados en el tornero
+        //pedir escoger los jurados de los jurados en el torneo
         for (int i = 0; juradosEnfrentamiento.size() < numeroJurados; i++) {
 
             int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados, null);
@@ -268,10 +266,11 @@ public class Torneo {
             }
         }
         int [] resultados ={0,0,0};
-        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, null);
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE);
         enfrentamientos.add(enfrentamiento);
     }
-    //pedir fecha
+
+    //pedir fecha con hora
     public LocalDateTime pedirFechaHora(String msj, String text) {
         String fecha = JOptionPane.showInputDialog(null, msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
         try {
