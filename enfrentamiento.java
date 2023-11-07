@@ -1,7 +1,7 @@
 import java.time.*;
 import java.util.*;
 
-public class Enfrentamiento {
+public class enfrentamiento {
     private LocalDateTime fechaInicio;
     private ArrayList<ArrayList> contrincantes;
     private ArrayList<Jurado> jueces;
@@ -9,7 +9,7 @@ public class Enfrentamiento {
     private int[] resultados = new int[3];
     private TipoEnfrentamiento tipoEnfrentamiento;
 
-public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
+public enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
             String lugar, int[] resultados, TipoEnfrentamiento tipoEnfrentamiento) {
         this.fechaInicio = fechaInicio;
         this.contrincantes = contrincantes;
