@@ -270,11 +270,6 @@ public class Torneo {
         int [] resultados ={0,0,0};
         Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, null);
         enfrentamientos.add(enfrentamiento);
-
-        //general todos los enfrentamientos q hay
-
-
-
     }
     //pedir fecha
     public LocalDateTime pedirFechaHora(String msj, String text) {
