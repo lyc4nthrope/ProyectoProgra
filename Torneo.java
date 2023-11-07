@@ -285,7 +285,15 @@ public class Torneo {
     }
 
 
+    public void mostrarEnfrentamientos(){
+        String enfrentamientosGeneral = "";
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
+            enfrentamientosGeneral = enfrentamientosGeneral+"\n"+enfrentamiento.infoEnfrentamiento();
+        }
+        JOptionPane.showMessageDialog(null, enfrentamientosGeneral);
+    }
 
+    
 
 
     // general
