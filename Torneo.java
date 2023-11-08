@@ -284,7 +284,7 @@ public class Torneo {
 
     }
 
-
+    // general
     public void mostrarEnfrentamientos(){
         String enfrentamientosGeneral = "";
         for (enfrentamiento enfrentamiento : enfrentamientos) {
@@ -292,13 +292,6 @@ public class Torneo {
         }
         JOptionPane.showMessageDialog(null, enfrentamientosGeneral);
     }
-
-    
-
-
-    // general
-
-
 
     // buscar por equipos
 
