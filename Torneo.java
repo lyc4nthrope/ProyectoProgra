@@ -126,9 +126,11 @@ public class Torneo {
         return LocalDateTime.now().isAfter(fechaCierreInscripcion);
     }
     
-    public boolean abiertaInscripcion(){
+    public boolean abiertaInscripcion() {
         return LocalDateTime.now().isBefore(fechaInscripcion);
     }
+    
+    public static ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
 
     public void añadirEquipo() {
     if (aunFechaInscripcion() && abiertaInscripcion()) {
@@ -206,6 +208,7 @@ public class Torneo {
     // enfrentamientos
 
     public void crearEnfrentamientos() {
+
         String elemento = "";
 
         //pedir los contrincantes de los equipos en el torneo
@@ -223,14 +226,13 @@ public class Torneo {
 
         } while (op == opp);
         ArrayList contrincantes = new ArrayList<>();
-        contrincantes.add(equipos.get(op-1));
-        contrincantes.add(equipos.get(opp-1));
+        contrincantes.add(equipos.get(op - 1));
+        contrincantes.add(equipos.get(opp - 1));
 
-
-        LocalDateTime fechaEnfrantamiento = pedirFechaHora("Ingrese la fecha del enfrentamiento y hora del torneo: ", null);
+        LocalDateTime fechaEnfrantamiento = pedirFechaHora("Ingrese la fecha del enfrentamiento y hora del torneo: ",
+                null);
 
         String lugar = pedir("ingrese el lugar del enfrentamiento: ", null);
-
 
         String listanombres = "";
 
@@ -238,12 +240,11 @@ public class Torneo {
 
             listanombres = listanombres + "\n" + (i + 1) + ". " + jurados.get(i).getNombre();
 
-
         }
 
         int numeroJurados = pedirInt("ingrese el numero de jurados para este enfrentamiento:", null);
 
-        ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
+        
 
         //pedir escoger los jurados de los jurados en el torneo
         for (int i = 0; juradosEnfrentamiento.size() < numeroJurados; i++) {
@@ -256,18 +257,73 @@ public class Torneo {
             for (int j = 0; j < juradosEnfrentamiento.size() && !sta; j++) {
 
                 if (juradosEnfrentamiento.get(j).getNombre().equals(jurados.get(numeroIndiceJurado - 1).getNombre())) {
-                    sta=true;
+                    sta = true;
                 }
             }
             if (sta) {
                 JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
-            }else{
-                juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado-1));
+            } else {
+                juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado - 1));
             }
         }
-        int [] resultados ={0,0,0};
-        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE);
+        int[] resultados = { 0, 0, 0 };
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento,
+                lugar, resultados, TipoEnfrentamiento.PENDIENTE);
         enfrentamientos.add(enfrentamiento);
+    }
+    
+     //añadir juez
+
+     public void añadirJuez() {
+
+         for (int i = 0; i < jurados.size(); i++) {
+            
+            String textNombre = "Nombre del juez";
+            String textEdad = "Edad del juez";
+            String textEmail = "email del juez";
+            String textTelefono = "Numero de celular del juez";
+            String textgenero = "1. Masculino\n 2. Femenino";
+            
+            if (i != 0) {
+                textNombre = "Nombre del Jugador";
+                textEdad = "Edad del jugador";
+                textEmail = "Email del jugador";
+                textTelefono = "Numero de celular del jugador";           
+            }
+
+            String nombreJuez = pedir(textNombre, null);
+            int edadJuez = pedirInt(textEdad, null);
+            String emailJuez = pedir(textEmail, null);
+            String telefonoJuez = pedir(textTelefono, null);
+           
+            int Xgenero =0;
+
+            do{
+                Xgenero = Integer.parseInt(pedir(textgenero, null));
+            }while(Xgenero !=1 || Xgenero!=2);
+
+            //GENERO MENU CON ENUM
+            Genero generoPersona = null;
+            if (Xgenero == 1) {
+                generoPersona = Genero.MASCULINO;             
+            } 
+            if (Xgenero == 2) {
+                generoPersona = Genero.FEMENINO;
+            }
+            
+            Jurado jurados = new Jurado(nombreJuez, edadJuez, textEmail, emailJuez, generoPersona, telefonoJuez);
+
+            juradosEnfrentamiento.add(jurados);   
+        }
+
+     
+
+         
+
+
+
+        
+        
     }
 
     //pedir fecha con hora
@@ -296,12 +352,11 @@ public class Torneo {
     // buscar por equipos
 
 
+   
 
     // buscar por juez
 
     
-
-
 
 
     // resultados
