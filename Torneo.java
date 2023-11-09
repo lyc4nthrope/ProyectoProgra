@@ -4,7 +4,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Torneo {
-    private ArrayList<enfrentamiento> enfrentamientos = new ArrayList<>();
+    private ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
     private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     private ArrayList<Jurado> jurados = new ArrayList<>();
@@ -266,7 +266,7 @@ public class Torneo {
             }
         }
         int [] resultados ={0,0,0};
-        enfrentamiento enfrentamiento = new enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE);
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE);
         enfrentamientos.add(enfrentamiento);
     }
 
@@ -287,7 +287,7 @@ public class Torneo {
     // general
     public void mostrarEnfrentamientos(){
         String enfrentamientosGeneral = "";
-        for (enfrentamiento enfrentamiento : enfrentamientos) {
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
             enfrentamientosGeneral = enfrentamientosGeneral+"\n"+enfrentamiento.infoEnfrentamiento();
         }
         JOptionPane.showMessageDialog(null, enfrentamientosGeneral);
@@ -298,6 +298,8 @@ public class Torneo {
 
 
     // buscar por juez
+
+    
 
 
 
