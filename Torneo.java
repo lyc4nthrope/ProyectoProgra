@@ -8,6 +8,7 @@ public class Torneo {
     private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     private ArrayList<Jurado> jurados = new ArrayList<>();
+    private ArrayList<int[]> resultadosEquipos =new ArrayList<>();
     
     private String nombreTorneo;
     private LocalDateTime fechaInicioTorneo;
@@ -350,7 +351,7 @@ public class Torneo {
             for (int j = 0; j < contrincantes.size(); j++) {
                // if (equipoBuscado == contrincantes) {
                     
-                }
+                
             }
         }
         
@@ -365,7 +366,17 @@ public class Torneo {
 
 
     // resultados
-
+   
+    public void resultadosEnfrentamientos(){
+        String listaResultados="";
+        ArrayList<int []> resultadoCada = (ArrayList<int[]>) resultadosEquipos.clone();
+        Collections.sort(resultadoCada, new CompararResultadosV());
+        for (int index = 0; index < resultadoCada.size(); index++) {
+            String resultadito=resultadoCada.get(index)[0]+"  "+resultadoCada.get(index)[1]+"   "+resultadoCada.get(index)[2];
+            listaResultados=listaResultados+nombresEquipos.get(index)+"     "+resultadito+"\n";
+        }
+        JOptionPane.showMessageDialog(null, listaResultados);
+    }
 
 
 

@@ -61,16 +61,12 @@ public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincan
         ArrayList<Representante> equipo2 = contrincantes.get(1);
         String nombreJurados="";
         for (Jurado juez : jueces) {
-            nombreJurados=nombreJurados+", "+juez.getNombre();
+            nombreJurados=nombreJurados+juez.getNombre()+", ";
         }
         return (equipo1.get(0).getEquipo()+" vs "+equipo2.get(0).getEquipo()+" en "
-        +lugar+", en la fecha de "+fechaInicio+" con los jueces ["+nombreJurados+"] y el enfrentamiento esta"+tipoEnfrentamiento); 
+        +lugar+", en la fecha de "+fechaInicio+" con los jueces ["+nombreJurados+"] y el enfrentamiento esta "+tipoEnfrentamiento+"\n"); 
     }
 
-    public String resultadoEnfrentamiento(){
-        ArrayList<Representante> equipo1 = contrincantes.get(0);
-        ArrayList<Representante> equipo2 = contrincantes.get(1);
-        return (equipo1.get(0).getEquipo()+" vs "+equipo2.get(0).getEquipo()+ " V : "+resultados[0]+"  E : "+resultados[1]+"  D : "+resultados[2]); 
-    }
+  
     
 }
