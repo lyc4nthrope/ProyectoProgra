@@ -345,9 +345,13 @@ public class Torneo {
 
     public void buscarPorEquipos() {
 
+        String equipoBuscado = JOptionPane.showInputDialog("ingrese el equipo a buscar: ");
         for (int i = 0; i < enfrentamientos.size(); i++) {
-        
-            
+            for (int j = 0; j < contrincantes.size(); j++) {
+               // if (equipoBuscado == contrincantes) {
+                    
+                }
+            }
         }
         
     }
