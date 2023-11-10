@@ -129,6 +129,7 @@ public class Torneo {
     public boolean abiertaInscripcion() {
         return LocalDateTime.now().isBefore(fechaInscripcion);
     }
+    public static ArrayList<ArrayList> contrincantes = new ArrayList<>();
     
     public static ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
 
@@ -225,7 +226,7 @@ public class Torneo {
             opp = pedirInt("ingrese el numero del n equipo: \n " + elemento, null);
 
         } while (op == opp);
-        ArrayList contrincantes = new ArrayList<>();
+        
         contrincantes.add(equipos.get(op - 1));
         contrincantes.add(equipos.get(opp - 1));
 
@@ -315,15 +316,6 @@ public class Torneo {
 
             juradosEnfrentamiento.add(jurados);   
         }
-
-     
-
-         
-
-
-
-        
-        
     }
 
     //pedir fecha con hora
@@ -350,6 +342,15 @@ public class Torneo {
     }
 
     // buscar por equipos
+
+    public void buscarPorEquipos() {
+
+        for (int i = 0; i < enfrentamientos.size(); i++) {
+        
+            
+        }
+        
+    }
 
 
    
