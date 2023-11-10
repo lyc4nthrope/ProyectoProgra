@@ -346,14 +346,40 @@ public class Torneo {
     public void buscarPorEquipos() {
 
         String equipoBuscado = JOptionPane.showInputDialog("ingrese el equipo a buscar: ");
-        for (int i = 0; i < enfrentamientos.size(); i++) {
-            for (int j = 0; j < contrincantes.size(); j++) {
-               // if (equipoBuscado == contrincantes) {
-                    
+
+        if (existeEquipo(equipoBuscado)) {
+            String text = "";
+            for (int i = 0; i < enfrentamientos.size(); i++) {
+                ArrayList<ArrayList> contrincantes = enfrentamientos.get(i).getContrincantes();
+                ArrayList<Representante> equipo = contrincantes.get(0);
+                ArrayList<Representante> equipoDos = contrincantes.get(1);
+                if (equipo.get(0).getEquipo().equals(equipoBuscado)
+                        || equipoDos.get(0).getEquipo().equals(equipoBuscado)) {
+
+                    text += enfrentamientos.get(i).infoEnfrentamiento() + "\n\n";
+
                 }
+
             }
+            JOptionPane.showMessageDialog(null, text);
         }
+        else {
+            JOptionPane.showMessageDialog(null, "El equipo no existe"); 
+        }
+
         
+        
+    }
+    
+    public boolean existeEquipo(String equipoBuscado ) {
+        boolean sta = false;
+        for (int i = 0; i < nombresEquipos.size() && !sta; i++) {
+            if (equipoBuscado.equals(nombresEquipos.get(i))) {
+                sta = true;
+            }
+               
+        }
+        return sta;
     }
 
 
