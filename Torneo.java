@@ -416,12 +416,28 @@ public class Torneo {
    
     public void resultadosEnfrentamientos(){
         String listaResultados="";
-        ArrayList<int []> resultadoCada = (ArrayList<int[]>) resultadosEquipos.clone();
-        Collections.sort(resultadoCada, new CompararResultadosV());
-        for (int index = 0; index < resultadoCada.size(); index++) {
-            String resultadito=resultadoCada.get(index)[0]+"  "+resultadoCada.get(index)[1]+"   "+resultadoCada.get(index)[2];
-            listaResultados=listaResultados+nombresEquipos.get(index)+"     "+resultadito+"\n\n";
+        ArrayList<int[]> resultadoCada = (ArrayList<int[]>) resultadosEquipos.clone();
+        ArrayList<String> nombresEquiposAux = (ArrayList<String>) nombresEquipos.clone();
+        for (int i = 0; i < resultadoCada.size(); i++) {
+            for (int j = 1; j < resultadoCada.size(); j++) {
+                if (resultadoCada.get(i)[0] < resultadoCada.get(j)[0]) {
+                    int[] unResultado = resultadoCada.get(j);
+                    resultadoCada.remove(j);
+                    resultadoCada.add(i, unResultado);
+                    String unEquipo = nombresEquiposAux.get(j);
+                    nombresEquiposAux.remove(j);
+                    nombresEquiposAux.add(i, unEquipo);
+
+                }
+
+            }
+
         }
+        for (int i = 0; i < resultadoCada.size(); i++) {
+            listaResultados += nombresEquiposAux.get(i) + "  V: " + resultadoCada.get(i)[0] + "  E: "+ resultadoCada.get(i)[1] + " D: " + resultadoCada.get(i)[2] + "\n\n";
+            
+        }
+
         JOptionPane.showMessageDialog(null, listaResultados);
     }
 
