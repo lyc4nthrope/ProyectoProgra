@@ -253,16 +253,8 @@ public class Torneo {
 
             int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados, null);
 
-            boolean sta = false;
-
-            //revision si ya esta ese jurado
-            for (int j = 0; j < juradosEnfrentamiento.size() && !sta; j++) {
-
-                if (juradosEnfrentamiento.get(j).getNombre().equals(jurados.get(numeroIndiceJurado - 1).getNombre())) {
-                    sta = true;
-                }
-            }
-            if (sta) {
+           
+            if (buscarJuez(juradosEnfrentamiento, jurados.get(numeroIndiceJurado-1).getNombre())) {
                 JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
             } else {
                 juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado - 1));
@@ -279,45 +271,57 @@ public class Torneo {
      public void añadirJuez() {
 
          for (int i = 0; i < jurados.size(); i++) {
-            
-            String textNombre = "Nombre del juez";
-            String textEdad = "Edad del juez";
-            String textEmail = "email del juez";
-            String textTelefono = "Numero de celular del juez";
-            String textgenero = "1. Masculino\n 2. Femenino";
-            
-            if (i != 0) {
-                textNombre = "Nombre del Jugador";
-                textEdad = "Edad del jugador";
-                textEmail = "Email del jugador";
-                textTelefono = "Numero de celular del jugador";           
+
+             String textNombre = "Nombre del juez";
+             String textEdad = "Edad del juez";
+             String textEmail = "email del juez";
+             String textTelefono = "Numero de celular del juez";
+             String textgenero = "1. Masculino\n 2. Femenino";
+
+             if (i != 0) {
+                 textNombre = "Nombre del Jugador";
+                 textEdad = "Edad del jugador";
+                 textEmail = "Email del jugador";
+                 textTelefono = "Numero de celular del jugador";
+             }
+
+             String nombreJuez = pedir(textNombre, null);
+             int edadJuez = pedirInt(textEdad, null);
+             String emailJuez = pedir(textEmail, null);
+             String telefonoJuez = pedir(textTelefono, null);
+
+             int Xgenero = 0;
+
+             do {
+                 Xgenero = Integer.parseInt(pedir(textgenero, null));
+             } while (Xgenero != 1 || Xgenero != 2);
+
+             //GENERO MENU CON ENUM
+             Genero generoPersona = null;
+             if (Xgenero == 1) {
+                 generoPersona = Genero.MASCULINO;
+             }
+             if (Xgenero == 2) {
+                 generoPersona = Genero.FEMENINO;
+             }
+
+             Jurado jurados = new Jurado(nombreJuez, edadJuez, textEmail, emailJuez, generoPersona, telefonoJuez);
+
+             juradosEnfrentamiento.add(jurados);
+         }
+     }
+    
+     public boolean buscarJuez(ArrayList<Jurado> jueces, String nombreJurado) {
+         boolean sta = false;
+        for (int i = 0; i < jueces.size() && !sta; i++) {
+            if (jueces.get(i).getNombre().equals(nombreJurado)) {
+                sta = true;
             }
 
-            String nombreJuez = pedir(textNombre, null);
-            int edadJuez = pedirInt(textEdad, null);
-            String emailJuez = pedir(textEmail, null);
-            String telefonoJuez = pedir(textTelefono, null);
-           
-            int Xgenero =0;
-
-            do{
-                Xgenero = Integer.parseInt(pedir(textgenero, null));
-            }while(Xgenero !=1 || Xgenero!=2);
-
-            //GENERO MENU CON ENUM
-            Genero generoPersona = null;
-            if (Xgenero == 1) {
-                generoPersona = Genero.MASCULINO;             
-            } 
-            if (Xgenero == 2) {
-                generoPersona = Genero.FEMENINO;
-            }
-            
-            Jurado jurados = new Jurado(nombreJuez, edadJuez, textEmail, emailJuez, generoPersona, telefonoJuez);
-
-            juradosEnfrentamiento.add(jurados);   
         }
-    }
+        return sta;
+        
+     }
 
     //pedir fecha con hora
     public LocalDateTime pedirFechaHora(String msj, String text) {
@@ -383,8 +387,30 @@ public class Torneo {
 
     // buscar por juez
 
-    
+    public void enfrentamientoJuez() {
+         String juezBuscado = JOptionPane.showInputDialog("ingrese el juez a buscar: ");
 
+        if (buscarJuez(jurados, juezBuscado)) {
+            String text = "";
+            for (int i = 0; i < enfrentamientos.size(); i++) {
+                ArrayList<Jurado> juradosEnfre = enfrentamientos.get(i).getJueces();
+                for (int j = 0; j < juradosEnfre.size(); j++) {
+                     if (jurados.get(j).getNombre().equals(juezBuscado)) {
+                     text += enfrentamientos.get(i).infoEnfrentamiento() + "\n\n";
+
+                    }
+                    
+                }
+               
+
+            }
+            JOptionPane.showMessageDialog(null, text);
+        } else {
+            JOptionPane.showMessageDialog(null, "El equipo no existe");
+        }
+
+        
+    }
 
     // resultados
    
