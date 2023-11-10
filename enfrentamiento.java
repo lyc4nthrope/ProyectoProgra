@@ -8,16 +8,8 @@ public class Enfrentamiento {
     private String lugar;
     private int[] resultados = new int[3];
     private TipoEnfrentamiento tipoEnfrentamiento;
-
-public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
-            String lugar, int[] resultados, TipoEnfrentamiento tipoEnfrentamiento) {
-        this.fechaInicio = fechaInicio;
-        this.contrincantes = contrincantes;
-        this.jueces = jueces;
-        this.lugar = lugar;
-        this.resultados = resultados;
-        this.tipoEnfrentamiento = tipoEnfrentamiento;
-    }
+    
+        
     
     public LocalDateTime getFechainicio() {
         return fechaInicio;
@@ -26,6 +18,8 @@ public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincan
         this.fechaInicio = fechaInicio;
     }
     public ArrayList<ArrayList> getContrincantes() {
+
+
         return contrincantes;
     }
     public void setContrincantes(ArrayList<ArrayList> contrincantes) {
