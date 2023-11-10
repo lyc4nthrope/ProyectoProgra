@@ -373,7 +373,7 @@ public class Torneo {
         Collections.sort(resultadoCada, new CompararResultadosV());
         for (int index = 0; index < resultadoCada.size(); index++) {
             String resultadito=resultadoCada.get(index)[0]+"  "+resultadoCada.get(index)[1]+"   "+resultadoCada.get(index)[2];
-            listaResultados=listaResultados+nombresEquipos.get(index)+"     "+resultadito+"\n";
+            listaResultados=listaResultados+nombresEquipos.get(index)+"     "+resultadito+"\n\n";
         }
         JOptionPane.showMessageDialog(null, listaResultados);
     }

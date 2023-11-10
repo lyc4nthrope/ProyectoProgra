@@ -64,7 +64,7 @@ public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincan
             nombreJurados=nombreJurados+juez.getNombre()+", ";
         }
         return (equipo1.get(0).getEquipo()+" vs "+equipo2.get(0).getEquipo()+" en "
-        +lugar+", en la fecha de "+fechaInicio+" con los jueces ["+nombreJurados+"] y el enfrentamiento esta "+tipoEnfrentamiento+"\n"); 
+        +lugar+", en la fecha de "+fechaInicio+" con los jueces ["+nombreJurados+"] y el enfrentamiento esta "+tipoEnfrentamiento+"\n\n"); 
     }
 
   
