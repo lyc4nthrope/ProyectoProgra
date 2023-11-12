@@ -446,25 +446,24 @@ public class Torneo {
         for (int i = 0; i < enfrentamientos.size(); i++) {
             if (enfrentamientos.get(i).getCodigo() == anti) {
                 String situ = JOptionPane.showInputDialog(
-                        "Ingrese el nuevo estado del enfrentamiento: PENDIENTE, EN_JUEGO, APLAZADO, FINALIZADO");
+                        "Ingrese el nuevo estado del enfrentamiento: \n PENDIENTE \n EN_JUEGO \n APLAZADO \n FINALIZADO");
                 TipoEnfrentamiento estado = TipoEnfrentamiento.valueOf(situ);
                 enfrentamientos.get(i).setTipoEnfrentamiento(estado);
+                if (situ.equals("FINALIZADO")) {
+                    int resul = Integer.parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
+                    if (resul == 1) {
+                        
+                    }
+                }
 
                 int op = Integer.parseInt(JOptionPane
-                        .showInputDialog("ingrese el tipo de cambio que desea ejecutar: \n" + "1. Cambiar la fecha \n" + "2. Cambiar el resultado \n" + "3. salir"));
-                do {
-                    if (op == 1) {
-                        LocalDateTime fecha = pedirFechaHora(
-                                "ingrese la nueva fecha de inicio y hora del enfrentamiento:  ",
-                                null);
-                        enfrentamientos.get(i).setFechainicio(fecha);
-                    } else {
-                        if (op == 2) {
-                            resultadosEnfrentamientos();
-                        }
-                    }
-                } while (op < 3);
-
+                        .showInputDialog("Desea cambiar la fecha del enfrentamiento: " + "1. si \n" + "2. no"));
+                if (op == 1) {
+                    LocalDateTime fecha = pedirFechaHora(
+                            "ingrese la nueva fecha de inicio y hora del enfrentamiento:  ",
+                            null);
+                    enfrentamientos.get(i).setFechainicio(fecha);
+                }
             }
 
         }
