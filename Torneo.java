@@ -392,7 +392,7 @@ public class Torneo {
 
         if (buscarJuez(jurados, juezBuscado)) {
             String text = "";
-            for (int i = 0; i < enfrentamientos.size(); i++) {
+            for (int i = 0; i < jurados.size(); i++) {
                 ArrayList<Jurado> juradosEnfre = enfrentamientos.get(i).getJueces();
                 for (int j = 0; j < juradosEnfre.size(); j++) {
                      if (jurados.get(j).getNombre().equals(juezBuscado)) {
@@ -444,16 +444,56 @@ public class Torneo {
 
 
     // modificar enfrentamientos
+    public void modificarEnfrentamientos(){
+
+        Enfrentamiento enfrentamientoMod;
+
+
+    }
 
 
 
     // ver equipos
+
+    public void verEquipos(){
+
+        ArrayList<String> msj = new ArrayList<String>();
+        for (int i = 0; i < equipos.size(); i++) {
+            String compil = "\n" + equipos.get(i);
+            msj.add(compil);
+
+        }
+        Collections.sort(msj, ordenarVictorias);
+        JOptionPane.showMessageDialog(null, msj);
+
+    }
+
+
+    // ordenar equipos por victorias
+    public class ordenarVictorias implements Comparator<Enfrentamiento> {
+
+        @Override
+        public int compare(Enfrentamiento e1, Enfrentamiento e2){
+            return e1.getResultados()-e2.getResultados();
+        }
+    
+        
+    }
 
 
 
 
     // ver jueces
 
+    public void verJueces(){
+
+        String msj = "";
+        for (int i = 0; i < jurados.size(); i++) {
+            msj += jurados.get(i) +"\n";
+
+        }
+        JOptionPane.showMessageDialog(null, msj);
+    }
 
 
 
