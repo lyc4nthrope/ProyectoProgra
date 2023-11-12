@@ -8,8 +8,8 @@ public class Torneo {
     private ArrayList<String> nombresEquipos = new ArrayList<>();
     private ArrayList<ArrayList> equipos = new ArrayList<>();
     private ArrayList<Jurado> jurados = new ArrayList<>();
-    private ArrayList<int[]> resultadosEquipos =new ArrayList<>();
-    
+    private ArrayList<int[]> resultadosEquipos = new ArrayList<>();
+
     private String nombreTorneo;
     private LocalDateTime fechaInicioTorneo;
     private int limiteEdad;
@@ -21,7 +21,8 @@ public class Torneo {
     private LocalDateTime fechaCierreInscripcion;
     private float valorInscripcion;
 
-    public Torneo(String nombreTorneo, LocalDateTime fechaTorneo, int limiteEdad, String tipoDeporte, int numeroJugadoresEquipo,
+    public Torneo(String nombreTorneo, LocalDateTime fechaTorneo, int limiteEdad, String tipoDeporte,
+            int numeroJugadoresEquipo,
             Genero genero, TipoTorneo tipoTorneo, LocalDateTime fechaInscripcion, LocalDateTime fechaCierreInscripcion,
             float valorInscripcion) {
         this.nombreTorneo = nombreTorneo;
@@ -36,11 +37,9 @@ public class Torneo {
         this.valorInscripcion = valorInscripcion;
     }
 
-
     public ArrayList<ArrayList> getEquipos() {
         return equipos;
     }
-
 
     public String getNombre() {
         return nombreTorneo;
@@ -122,73 +121,74 @@ public class Torneo {
         this.valorInscripcion = valorInscripcion;
     }
 
-    
     public boolean aunFechaInscripcion() {
         return LocalDateTime.now().isAfter(fechaCierreInscripcion);
     }
-    
+
     public boolean abiertaInscripcion() {
         return LocalDateTime.now().isBefore(fechaInscripcion);
     }
+
     public static ArrayList<ArrayList> contrincantes = new ArrayList<>();
-    
+
     public static ArrayList<Jurado> juradosEnfrentamiento = new ArrayList<>();
 
     public void añadirEquipo() {
-    if (aunFechaInscripcion() && abiertaInscripcion()) {
+        if (aunFechaInscripcion() && abiertaInscripcion()) {
 
-        ArrayList <Representante> equipo = new ArrayList <>();
+            ArrayList<Representante> equipo = new ArrayList<>();
 
-         String nombreEquipo = pedir("Nombre del equipo", null);
+            String nombreEquipo = pedir("Nombre del equipo", null);
 
-        for (int i = 0; equipo.size() < numeroJugadoresEquipo + 1; i++) {
+            for (int i = 0; equipo.size() < numeroJugadoresEquipo + 1; i++) {
 
-            String textNombre = "Nombre Representante";
-            String textEdad = "Edad del Represetante";
-            String textEmail = "email del representante";
-            String textTelefono = "Numero de celular del representante";
-            String textgenero = "1. Masculino\n 2. Femenino";
-            
-            if (i != 0) {
-                textNombre = "Nombre del Jugador";
-                textEdad = "Edad del jugador";
-                textEmail = "Email del jugador";
-                textTelefono = "Numero de celular del jugador";           
+                String textNombre = "Nombre Representante";
+                String textEdad = "Edad del Represetante";
+                String textEmail = "email del representante";
+                String textTelefono = "Numero de celular del representante";
+                String textgenero = "1. Masculino\n 2. Femenino";
+
+                if (i != 0) {
+                    textNombre = "Nombre del Jugador";
+                    textEdad = "Edad del jugador";
+                    textEmail = "Email del jugador";
+                    textTelefono = "Numero de celular del jugador";
+                }
+
+                String nombre = pedir(textNombre, null);
+                int edad = pedirInt(textEdad, null);
+                String email = pedir(textEmail, null);
+                String telefono = pedir(textTelefono, null);
+
+                int Xgenero = 0;
+
+                do {
+                    Xgenero = Integer.parseInt(pedir(textgenero, null));
+                } while (Xgenero != 1 || Xgenero != 2);
+
+                // GENERO MENU CON ENUM
+                Genero generoPersona = null;
+                if (Xgenero == 1) {
+                    generoPersona = Genero.MASCULINO;
+                }
+                if (Xgenero == 2) {
+                    generoPersona = Genero.FEMENINO;
+                }
+                if (generoPersona == genero || genero == Genero.MIXTO) {
+                    Representante jugador = new Representante(nombre, edad, email, telefono, generoPersona,
+                            nombreEquipo);
+                    equipo.add(jugador);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);
+                }
+
             }
 
-            String nombre = pedir(textNombre, null);
-            int edad = pedirInt(textEdad, null);
-            String email = pedir(textEmail, null);
-            String telefono = pedir(textTelefono, null);
-           
-            int Xgenero =0;
-
-            do{
-                Xgenero = Integer.parseInt(pedir(textgenero, null));
-            }while(Xgenero !=1 || Xgenero!=2);
-
-            //GENERO MENU CON ENUM
-            Genero generoPersona = null;
-            if (Xgenero == 1) {
-                generoPersona = Genero.MASCULINO;             
-            } 
-            if (Xgenero == 2) {
-                generoPersona = Genero.FEMENINO;  
-            }
-            if (generoPersona==genero || genero==Genero.MIXTO) {
-                Representante jugador = new Representante (nombre, edad, email, telefono, generoPersona, nombreEquipo);
-                equipo.add(jugador);
-                
-            }else{
-                JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);          
-            }
-
-            }
-            
             nombresEquipos.add(nombreEquipo);
             equipos.add(equipo);
 
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "La fecha de Inscripcion no han empezado o se han acabado");
         }
     }
@@ -199,13 +199,15 @@ public class Torneo {
     }
 
     public void modificarFechaInicioInscripcion() {
-        
-        this.fechaInscripcion= pedirFechaHora("ingrese la nueva fecha de inicio de inscripcion y hora del torneo: ", null); 
-     
+
+        this.fechaInscripcion = pedirFechaHora("ingrese la nueva fecha de inicio de inscripcion y hora del torneo: ",
+                null);
+
     }
 
     public void modificarFechaCierreInscripcion() {
-        this.fechaCierreInscripcion = pedirFechaHora("ingrese la nueva fecha de cierre de inscripcion y hora del torneo: ", null);
+        this.fechaCierreInscripcion = pedirFechaHora(
+                "ingrese la nueva fecha de cierre de inscripcion y hora del torneo: ", null);
     }
     // enfrentamientos
 
@@ -213,7 +215,7 @@ public class Torneo {
 
         String elemento = "";
 
-        //pedir los contrincantes de los equipos en el torneo
+        // pedir los contrincantes de los equipos en el torneo
         for (int i = 0; i < nombresEquipos.size(); i++) {
 
             elemento = elemento + "\n" + (i + 1) + ". " + nombresEquipos.get(i);
@@ -224,10 +226,10 @@ public class Torneo {
         int opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento, null);
 
         do {
-            opp = pedirInt("ingrese el numero del n equipo: \n " + elemento, null);
+            opp = pedirInt("ingrese el numero del segundo equipo: \n " + elemento, null);
 
         } while (op == opp);
-        
+
         contrincantes.add(equipos.get(op - 1));
         contrincantes.add(equipos.get(opp - 1));
 
@@ -246,73 +248,71 @@ public class Torneo {
 
         int numeroJurados = pedirInt("ingrese el numero de jurados para este enfrentamiento:", null);
 
-        
-
-        //pedir escoger los jurados de los jurados en el torneo
+        // pedir escoger los jurados de los jurados en el torneo
         for (int i = 0; juradosEnfrentamiento.size() < numeroJurados; i++) {
 
             int numeroIndiceJurado = pedirInt("ingrese el numero del nombre del jurado: " + numeroJurados, null);
 
-           
-            if (buscarJuez(juradosEnfrentamiento, jurados.get(numeroIndiceJurado-1).getNombre())) {
+            if (buscarJuez(juradosEnfrentamiento, jurados.get(numeroIndiceJurado - 1).getNombre())) {
                 JOptionPane.showMessageDialog(null, "Jurado ya ingresado, ingrese otro");
             } else {
                 juradosEnfrentamiento.add(jurados.get(numeroIndiceJurado - 1));
             }
         }
         int[] resultados = { 0, 0, 0 };
+        int codigo = pedirInt("ingrese el codigo del enfrentamiento: ", null);
         Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento,
                 lugar, resultados, TipoEnfrentamiento.PENDIENTE);
         enfrentamientos.add(enfrentamiento);
     }
-    
-     //añadir juez
 
-     public void añadirJuez() {
+    // añadir juez
 
-         for (int i = 0; i < jurados.size(); i++) {
+    public void añadirJuez() {
 
-             String textNombre = "Nombre del juez";
-             String textEdad = "Edad del juez";
-             String textEmail = "email del juez";
-             String textTelefono = "Numero de celular del juez";
-             String textgenero = "1. Masculino\n 2. Femenino";
+        for (int i = 0; i < jurados.size(); i++) {
 
-             if (i != 0) {
-                 textNombre = "Nombre del Jugador";
-                 textEdad = "Edad del jugador";
-                 textEmail = "Email del jugador";
-                 textTelefono = "Numero de celular del jugador";
-             }
+            String textNombre = "Nombre del juez";
+            String textEdad = "Edad del juez";
+            String textEmail = "email del juez";
+            String textTelefono = "Numero de celular del juez";
+            String textgenero = "1. Masculino\n 2. Femenino";
 
-             String nombreJuez = pedir(textNombre, null);
-             int edadJuez = pedirInt(textEdad, null);
-             String emailJuez = pedir(textEmail, null);
-             String telefonoJuez = pedir(textTelefono, null);
+            if (i != 0) {
+                textNombre = "Nombre del Jugador";
+                textEdad = "Edad del jugador";
+                textEmail = "Email del jugador";
+                textTelefono = "Numero de celular del jugador";
+            }
 
-             int Xgenero = 0;
+            String nombreJuez = pedir(textNombre, null);
+            int edadJuez = pedirInt(textEdad, null);
+            String emailJuez = pedir(textEmail, null);
+            String telefonoJuez = pedir(textTelefono, null);
 
-             do {
-                 Xgenero = Integer.parseInt(pedir(textgenero, null));
-             } while (Xgenero != 1 || Xgenero != 2);
+            int Xgenero = 0;
 
-             //GENERO MENU CON ENUM
-             Genero generoPersona = null;
-             if (Xgenero == 1) {
-                 generoPersona = Genero.MASCULINO;
-             }
-             if (Xgenero == 2) {
-                 generoPersona = Genero.FEMENINO;
-             }
+            do {
+                Xgenero = Integer.parseInt(pedir(textgenero, null));
+            } while (Xgenero != 1 || Xgenero != 2);
 
-             Jurado jurados = new Jurado(nombreJuez, edadJuez, textEmail, emailJuez, generoPersona, telefonoJuez);
+            // GENERO MENU CON ENUM
+            Genero generoPersona = null;
+            if (Xgenero == 1) {
+                generoPersona = Genero.MASCULINO;
+            }
+            if (Xgenero == 2) {
+                generoPersona = Genero.FEMENINO;
+            }
 
-             juradosEnfrentamiento.add(jurados);
-         }
-     }
-    
-     public boolean buscarJuez(ArrayList<Jurado> jueces, String nombreJurado) {
-         boolean sta = false;
+            Jurado jurados = new Jurado(nombreJuez, edadJuez, textEmail, emailJuez, generoPersona, telefonoJuez);
+
+            juradosEnfrentamiento.add(jurados);
+        }
+    }
+
+    public boolean buscarJuez(ArrayList<Jurado> jueces, String nombreJurado) {
+        boolean sta = false;
         for (int i = 0; i < jueces.size() && !sta; i++) {
             if (jueces.get(i).getNombre().equals(nombreJurado)) {
                 sta = true;
@@ -320,33 +320,32 @@ public class Torneo {
 
         }
         return sta;
-        
-     }
 
-    //pedir fecha con hora
+    }
+
+    // pedir fecha con hora
     public LocalDateTime pedirFechaHora(String msj, String text) {
-        String fecha = JOptionPane.showInputDialog(null, msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
+        String fecha = JOptionPane.showInputDialog(null,
+                msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
         try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
-        LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
-        return fechaHecha;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
+            LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
+            return fechaHecha;
         } catch (Exception e) {
-            return pedirFechaHora("Error al ingresar, intente de nuevo\n"+msj, fecha);
+            return pedirFechaHora("Error al ingresar, intente de nuevo\n" + msj, fecha);
         }
-        
 
     }
 
     // general
-    public void mostrarEnfrentamientos(){
+    public void mostrarEnfrentamientos() {
         String enfrentamientosGeneral = "";
         for (Enfrentamiento enfrentamiento : enfrentamientos) {
-            enfrentamientosGeneral = enfrentamientosGeneral+"\n"+enfrentamiento.infoEnfrentamiento();
+            enfrentamientosGeneral = enfrentamientosGeneral + "\n" + enfrentamiento.infoEnfrentamiento();
         }
         JOptionPane.showMessageDialog(null, enfrentamientosGeneral);
     }
 
-    
     // buscar por equipos
 
     public void buscarPorEquipos() {
@@ -388,20 +387,19 @@ public class Torneo {
     // buscar por juez
 
     public void enfrentamientoJuez() {
-         String juezBuscado = JOptionPane.showInputDialog("ingrese el juez a buscar: ");
+        String juezBuscado = JOptionPane.showInputDialog("ingrese el juez a buscar: ");
 
         if (buscarJuez(jurados, juezBuscado)) {
             String text = "";
             for (int i = 0; i < jurados.size(); i++) {
                 ArrayList<Jurado> juradosEnfre = enfrentamientos.get(i).getJueces();
                 for (int j = 0; j < juradosEnfre.size(); j++) {
-                     if (jurados.get(j).getNombre().equals(juezBuscado)) {
-                     text += enfrentamientos.get(i).infoEnfrentamiento() + "\n\n";
+                    if (jurados.get(j).getNombre().equals(juezBuscado)) {
+                        text += enfrentamientos.get(i).infoEnfrentamiento() + "\n\n";
 
                     }
-                    
+
                 }
-               
 
             }
             JOptionPane.showMessageDialog(null, text);
@@ -409,13 +407,12 @@ public class Torneo {
             JOptionPane.showMessageDialog(null, "El equipo no existe");
         }
 
-        
     }
 
     // resultados
-   
-    public void resultadosEnfrentamientos(){
-        String listaResultados="";
+
+    public void resultadosEnfrentamientos() {
+        String listaResultados = "";
         ArrayList<int[]> resultadoCada = (ArrayList<int[]>) resultadosEquipos.clone();
         ArrayList<String> nombresEquiposAux = (ArrayList<String>) nombresEquipos.clone();
         for (int i = 0; i < resultadoCada.size(); i++) {
@@ -434,30 +431,49 @@ public class Torneo {
 
         }
         for (int i = 0; i < resultadoCada.size(); i++) {
-            listaResultados += nombresEquiposAux.get(i) + "  V: " + resultadoCada.get(i)[0] + "  E: "+ resultadoCada.get(i)[1] + " D: " + resultadoCada.get(i)[2] + "\n\n";
-            
+            listaResultados += nombresEquiposAux.get(i) + "  V: " + resultadoCada.get(i)[0] + "  E: "
+                    + resultadoCada.get(i)[1] + " D: " + resultadoCada.get(i)[2] + "\n\n";
+
         }
 
         JOptionPane.showMessageDialog(null, listaResultados);
     }
 
-
-
     // modificar enfrentamientos
-    public void modificarEnfrentamientos(){
+    public void modificarEnfrentamientos() {
 
-        Enfrentamiento enfrentamientoMod;
+        int anti = Integer.parseInt(JOptionPane.showInputDialog("ingrese el codigo del enfrentamiento"));
+        for (int i = 0; i < enfrentamientos.size(); i++) {
+            if (enfrentamientos.get(i).getCodigo() == anti) {
+                String situ = JOptionPane.showInputDialog(
+                        "Ingrese el nuevo estado del enfrentamiento: PENDIENTE, EN_JUEGO, APLAZADO, FINALIZADO");
+                TipoEnfrentamiento estado = TipoEnfrentamiento.valueOf(situ);
+                enfrentamientos.get(i).setTipoEnfrentamiento(estado);
 
+                int op = Integer.parseInt(JOptionPane
+                        .showInputDialog("ingrese el tipo de cambio que desea ejecutar: \n" + "1. Cambiar la fecha \n" + "2. Cambiar el resultado \n" + "3. salir"));
+                do {
+                    if (op == 1) {
+                        LocalDateTime fecha = pedirFechaHora(
+                                "ingrese la nueva fecha de inicio y hora del enfrentamiento:  ",
+                                null);
+                        enfrentamientos.get(i).setFechainicio(fecha);
+                    } else {
+                        if (op == 2) {
+                            resultadosEnfrentamientos();
+                        }
+                    }
+                } while (op < 3);
+
+            }
+
+        }
 
     }
 
-    
-
-
-
     // ver equipos
 
-    public void verEquipos(){
+    public void verEquipos() {
 
         ArrayList<String> msj = new ArrayList<String>();
         for (int i = 0; i < equipos.size(); i++) {
@@ -470,59 +486,51 @@ public class Torneo {
 
     }
 
-
     // ordenar equipos por victorias
     public class ordenarVictorias implements Comparator<Enfrentamiento> {
 
         @Override
-        public int compare(Enfrentamiento e1, Enfrentamiento e2){
-            return e1.getResultados()-e2.getResultados();
+        public int compare(Enfrentamiento e1, Enfrentamiento e2) {
+            return e1.getResultados() - e2.getResultados();
         }
-    
-        
+
     }
-
-
-
 
     // ver jueces
 
-    public void verJueces(){
+    public void verJueces() {
 
         String msj = "";
         for (int i = 0; i < jurados.size(); i++) {
-            msj += jurados.get(i) +"\n";
+            msj += jurados.get(i) + "\n";
 
         }
         JOptionPane.showMessageDialog(null, msj);
     }
 
-
-
-
-     
     public static String pedir(String msj, String text) {
         return JOptionPane.showInputDialog(null, msj, text);
     }
+
     public static int pedirInt(String msj, String text) {
-        String numero=pedir(msj, text);
+        String numero = pedir(msj, text);
         try {
             int numTrue = Integer.parseInt(numero);
             return numTrue;
         } catch (Exception e) {
             // TODO: handle exception
-            return pedirInt("Error al ingresae\n"+msj, numero);
+            return pedirInt("Error al ingresae\n" + msj, numero);
         }
     }
 
-    public float pedirFloat(String msj, String text){
-         String numero = pedir(msj, text);
+    public float pedirFloat(String msj, String text) {
+        String numero = pedir(msj, text);
         try {
-            float numTrue=Float.parseFloat(numero);
+            float numTrue = Float.parseFloat(numero);
             return numTrue;
         } catch (java.util.InputMismatchException e) {
             // TODO: handle exception
-            return pedirFloat("Error al ingresar\n"+msj, numero);
+            return pedirFloat("Error al ingresar\n" + msj, numero);
         }
     }
 }
