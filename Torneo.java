@@ -450,9 +450,28 @@ public class Torneo {
                 TipoEnfrentamiento estado = TipoEnfrentamiento.valueOf(situ);
                 enfrentamientos.get(i).setTipoEnfrentamiento(estado);
                 if (situ.equals("FINALIZADO")) {
-                    int resul = Integer.parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
+                    int resul = Integer
+                            .parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
                     if (resul == 1) {
-                        
+                        String ganador = JOptionPane.showInputDialog("Ingrese el nombre del equipo ganador");
+                        ArrayList<ArrayList> contrincantes = enfrentamientos.get(i).getContrincantes();
+                        ArrayList<Representante> equipo = contrincantes.get(0);
+                        ArrayList<Representante> equipoDos = contrincantes.get(1);
+                        for (int j = 0; j < enfrentamientos.size(); j++) {
+
+                            if (equipo.equals(ganador)) {
+                                resultadosEquipos.get(j)[0] += 1;
+                                resultadosEquipos.get(i)[1] += 1;
+                            } else {
+                                if (equipoDos.equals(ganador)) {
+                                    resultadosEquipos.get(j)[0] += 1;
+                                    resultadosEquipos.get(i)[1] += 1;
+                                } else {
+                                    JOptionPane.showMessageDialog(null,
+                                            "el equipo ingresado no pertenece al enfrentamiento");
+                                }
+                            }
+                        }
                     }
                 }
 
