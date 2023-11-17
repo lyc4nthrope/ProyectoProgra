@@ -261,8 +261,7 @@ public class Torneo {
         }
         int[] resultados = { 0, 0, 0 };
         int codigo = pedirInt("ingrese el codigo del enfrentamiento: ", null);
-        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento,
-                lugar, resultados, TipoEnfrentamiento.PENDIENTE);
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes,juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE,codigo,"");
         enfrentamientos.add(enfrentamiento);
     }
 
@@ -443,74 +442,113 @@ public class Torneo {
     public void modificarEnfrentamientos() {
 
         int anti = Integer.parseInt(JOptionPane.showInputDialog("ingrese el codigo del enfrentamiento"));
-        for (int i = 0; i < enfrentamientos.size(); i++) {
-            if (enfrentamientos.get(i).getCodigo() == anti) {
-                String situ = JOptionPane.showInputDialog(
-                        "Ingrese el nuevo estado del enfrentamiento: \n PENDIENTE \n EN_JUEGO \n APLAZADO \n FINALIZADO");
-                TipoEnfrentamiento estado = TipoEnfrentamiento.valueOf(situ);
-                enfrentamientos.get(i).setTipoEnfrentamiento(estado);
-                if (situ.equals("FINALIZADO")) {
-                    int resul = Integer
-                            .parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
-                    if (resul == 1) {
-                        String ganador = JOptionPane.showInputDialog("Ingrese el nombre del equipo ganador");
-                        ArrayList<ArrayList> contrincantes = enfrentamientos.get(i).getContrincantes();
-                        ArrayList<Representante> equipo = contrincantes.get(0);
-                        ArrayList<Representante> equipoDos = contrincantes.get(1);
-                        for (int j = 0; j < enfrentamientos.size(); j++) {
 
-                            if (equipo.equals(ganador)) {
-                                resultadosEquipos.get(j)[0] += 1;
-                                resultadosEquipos.get(i)[1] += 1;
-                            } else {
-                                if (equipoDos.equals(ganador)) {
-                                    resultadosEquipos.get(j)[0] += 1;
-                                    resultadosEquipos.get(i)[1] += 1;
-                                } else {
-                                    JOptionPane.showMessageDialog(null,
-                                            "el equipo ingresado no pertenece al enfrentamiento");
-                                }
-                            }
-                        }
+        if (existeEnfrentamiento(anti)) {
+
+            String situ = JOptionPane.showInputDialog(
+                    "Ingrese el nuevo estado del enfrentamiento: \n EN JUEGO \n APLAZADO \n FINALIZADO");
+
+            int indiceEnfrentamiento = indiceEnfrentamientoCodigo(anti);
+            if (situ.equalsIgnoreCase("FINALIZADO")) {
+                int resul = Integer.parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
+                enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.FINALIZADO);
+                if (resul == 1) {
+                    String ganador = JOptionPane.showInputDialog("Ingrese el nombre del equipo ganador");
+                    ArrayList<ArrayList> contrincantes = enfrentamientos.get(indiceEnfrentamiento).getContrincantes();
+                    ArrayList<Representante> equipo = contrincantes.get(0);
+                    ArrayList<Representante> equipoDos = contrincantes.get(1);
+
+                    if (ganador.equals(equipo.get(0).getEquipo())) {
+                        int indexEquipGanador = indiceEquipo(ganador);
+                        int indexEquipPerdedor = indiceEquipo(equipoDos.get(0).getEquipo());
+                        resultadosEquipos.get(indexEquipGanador)[0] += 1;
+                        resultadosEquipos.get(indexEquipPerdedor)[2] += 1;
+                    }
+                    if (ganador.equals(equipoDos.get(0).getEquipo())) {
+                        int indexEquipGanador = indiceEquipo(ganador);
+                        int indexEquipPerdedor = indiceEquipo(equipo.get(0).getEquipo());
+                        resultadosEquipos.get(indexEquipGanador)[0] += 1;
+                        resultadosEquipos.get(indexEquipPerdedor)[2] += 1;
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "el equipo ingresado no pertenece al enfrentamiento");
                     }
                 }
-
-                int op = Integer.parseInt(JOptionPane
-                        .showInputDialog("Desea cambiar la fecha del enfrentamiento: " + "1. si \n" + "2. no"));
-                if (op == 1) {
-                    LocalDateTime fecha = pedirFechaHora(
-                            "ingrese la nueva fecha de inicio y hora del enfrentamiento:  ",
-                            null);
-                    enfrentamientos.get(i).setFechainicio(fecha);
+                if (resul == 2) {
+                    ArrayList<ArrayList> contrincantes = enfrentamientos.get(indiceEnfrentamiento).getContrincantes();
+                    ArrayList<Representante> equipo = contrincantes.get(0);
+                    ArrayList<Representante> equipoDos = contrincantes.get(1);
+                    int indexEquip1 = indiceEquipo(equipo.get(0).getEquipo());
+                    int indexEquip2 = indiceEquipo(equipoDos.get(0).getEquipo());
+                    resultadosEquipos.get(indexEquip1)[1] += 1;
+                    resultadosEquipos.get(indexEquip2)[1] += 1;
                 }
+
+            }
+            if (situ.equalsIgnoreCase("APLAZADO")) {
+                enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.APLAZADO);
+                LocalDateTime nuevaFecha = pedirFechaHora("ingrese la nueva fecha del enfrentamiento", null);
+                String razon = JOptionPane.showInputDialog("ingrese la razon del aplazamiento");
+                enfrentamientos.get(indiceEnfrentamiento).setFechainicio(nuevaFecha);
+                enfrentamientos.get(indiceEnfrentamiento).setRazon(razon);
+
+            }
+            if (situ.equalsIgnoreCase("EN JUEGO")) {
+                enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.EN_JUEGO);
+            }else{
+                JOptionPane.showMessageDialog(null, "estado no valido");
             }
 
         }
 
     }
 
+    // buscar equipo
+    public int indiceEquipo(String equipo) {
+        boolean esta = false;
+        int indiceEquipo = -1;
+        for (int i = 0; i < nombresEquipos.size() && !esta; i++) {
+            if (equipo.equalsIgnoreCase(nombresEquipos.get(i))) {
+                esta = true;
+                indiceEquipo = i;
+            }
+        }
+        return indiceEquipo;
+    }
+
+    public boolean existeEnfrentamiento(int codigo) {
+        boolean esta = false;
+        for (int i = 0; i < enfrentamientos.size() && !esta; i++) {
+            if (enfrentamientos.get(i).getCodigo() == codigo) {
+                esta = true;
+            }
+        }
+        return esta;
+    }
+
+    public int indiceEnfrentamientoCodigo(int codigo) {
+        boolean esta = false;
+        int indiceEnfrentamiento = -1;
+        for (int i = 0; i < enfrentamientos.size() && !esta; i++) {
+            if (enfrentamientos.get(i).getCodigo() == codigo) {
+                esta = true;
+                indiceEnfrentamiento = i;
+            }
+        }
+        return indiceEnfrentamiento;
+    }
     // ver equipos
 
     public void verEquipos() {
 
-        ArrayList<String> msj = new ArrayList<String>();
+        String msj = "";
         for (int i = 0; i < equipos.size(); i++) {
             String compil = "\n" + equipos.get(i);
-            msj.add(compil);
+            msj += compil;
 
         }
-        Collections.sort(msj, ordenarVictorias);
+        JOptionPane.showInputDialog(msj);
         JOptionPane.showMessageDialog(null, msj);
-
-    }
-
-    // ordenar equipos por victorias
-    public class ordenarVictorias implements Comparator<Enfrentamiento> {
-
-        @Override
-        public int compare(Enfrentamiento e1, Enfrentamiento e2) {
-            return e1.getResultados() - e2.getResultados();
-        }
 
     }
 

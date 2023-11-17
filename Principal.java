@@ -1,9 +1,12 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JOptionPane;
 
 /**
  * AUTORES: 
  * Daniel Perez
- * Camilo Ospina
+ * Camilo Ospina (El mas guapo)
  * Cristhian Osorio
  */
 
@@ -40,10 +43,21 @@ public class Principal {
 
         int op = 0; 
         do {
-            op = Integer.parseInt(pedir("1. Crear torneo\n 2. Entrar al torneo\n 3. salir"));
+            op = Integer.parseInt(pedir("1. Crear torneo\n 2. Entrar al torneo\n 3. salir", null));
 
             if (op == 1) {
+                String nombre = pedir("ingrese el nombre del torneo", null);
+                LocalDateTime fecha = pedirFechaHora("ingrese la fecha y hora del torneo", null);
+                int limiteEdad = pedirInt("Ingrese la edad minima para participar", null);
+                String deporte = pedir("ingrese el deporte del torneo", null);
+                int limiteJugador = pedirInt("Ingrese el numero de jugadores maximo", null);
+                String gen = pedir("ingrese el genero del torneo: \nMASCULINO \nFEMENINO \nMIXTO;", null);
+                if (gen.equalsIgnoreCase("MASCULINO")) {
+                    
+                }
 
+
+                Torneo torneo = new Torneo(nombre, fecha, limiteEdad, deporte, limiteJugador, null, null, null, null, op);
 
             }
             if (op == 2) {
@@ -51,7 +65,7 @@ public class Principal {
                 int option = 0;
                 do {
                     option = Integer.parseInt(pedir(
-                            "1. Añadir equipo\n 2. modificar fechas\n 3. enfrentamientos\n 4. equipos\n 5. jueces\n 6. volver"));
+                            "1. Añadir equipo\n 2. modificar fechas\n 3. enfrentamientos\n 4. equipos\n 5. jueces\n 6. volver", null));
                     
                     if (option == 1) {
 
@@ -64,7 +78,7 @@ public class Principal {
 
                         do {
                             optionn = Integer.parseInt(pedir(
-                            "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. volver"));
+                            "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. volver", null));
                         } while (optionn != 6);
 
                         if (option == 4) {
@@ -106,9 +120,44 @@ public class Principal {
 
 
     }
-
-    public static String pedir(String msj){
-        return JOptionPane.showInputDialog(null, msj);
+  
+    public static String pedir(String msj, String text) {
+        return JOptionPane.showInputDialog(null, msj, text);
     }
-    
+
+    public static int pedirInt(String msj, String text) {
+        String numero = pedir(msj, text);
+        try {
+            int numTrue = Integer.parseInt(numero);
+            return numTrue;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return pedirInt("Error al ingresae\n" + msj, numero);
+        }
+    }
+
+    public float pedirFloat(String msj, String text) {
+        String numero = pedir(msj, text);
+        try {
+            float numTrue = Float.parseFloat(numero);
+            return numTrue;
+        } catch (java.util.InputMismatchException e) {
+            // TODO: handle exception
+            return pedirFloat("Error al ingresar\n" + msj, numero);
+        }
+    }
+    public static LocalDateTime pedirFechaHora(String msj, String text) {
+        String fecha = JOptionPane.showInputDialog(null,
+                msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
+            LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
+            return fechaHecha;
+        } catch (Exception e) {
+            return pedirFechaHora("Error al ingresar, intente de nuevo\n" + msj, fecha);
+        }
+
+    }
+
 }
+
