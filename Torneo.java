@@ -122,11 +122,11 @@ public class Torneo {
     }
 
     public boolean aunFechaInscripcion() {
-        return LocalDateTime.now().isAfter(fechaCierreInscripcion);
+        return !LocalDateTime.now().isAfter(fechaCierreInscripcion);
     }
 
     public boolean abiertaInscripcion() {
-        return LocalDateTime.now().isBefore(fechaInscripcion);
+        return !LocalDateTime.now().isBefore(fechaInscripcion);
     }
 
     public static ArrayList<ArrayList> contrincantes = new ArrayList<>();
@@ -157,30 +157,37 @@ public class Torneo {
 
                 String nombre = pedir(textNombre, null);
                 int edad = pedirInt(textEdad, null);
-                String email = pedir(textEmail, null);
-                String telefono = pedir(textTelefono, null);
+                if (limiteEdad < edad || i==0) {
+                    String email = pedir(textEmail, null);
+                    String telefono = pedir(textTelefono, null);
 
-                int Xgenero = 0;
+                    int Xgenero = 0;
 
-                do {
-                    Xgenero = Integer.parseInt(pedir(textgenero, null));
-                } while (Xgenero != 1 || Xgenero != 2);
+                    do {
+                        Xgenero = pedirInt(textgenero, null);
+                    } while (Xgenero != 1 && Xgenero != 2);
 
-                // GENERO MENU CON ENUM
-                Genero generoPersona = null;
-                if (Xgenero == 1) {
-                    generoPersona = Genero.MASCULINO;
+                    // GENERO MENU CON ENUM
+                    Genero generoPersona = null;
+                    if (Xgenero == 1) {
+                        generoPersona = Genero.MASCULINO;
+                    }
+                    if (Xgenero == 2) {
+                        generoPersona = Genero.FEMENINO;
+                    }
+                    if (generoPersona == genero || genero == Genero.MIXTO || i == 0) {
+
+                        Representante jugador = new Representante(nombre, edad, email, telefono, generoPersona,
+                                nombreEquipo);
+                        equipo.add(jugador);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "No puede entrar al tornero ya que es un torneo de " + genero);
+                    }
                 }
-                if (Xgenero == 2) {
-                    generoPersona = Genero.FEMENINO;
-                }
-                if (generoPersona == genero || genero == Genero.MIXTO) {
-                    Representante jugador = new Representante(nombre, edad, email, telefono, generoPersona,
-                            nombreEquipo);
-                    equipo.add(jugador);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puede entrar al tornero ya que es un torneo de " + genero);
+                else {
+                    JOptionPane.showMessageDialog(null, "No tiene la edad requerida");
                 }
 
             }
@@ -194,6 +201,24 @@ public class Torneo {
     }
 
     // modificar fechas
+    public void modificarFechaMenu() {
+        int option = 0;
+        do {
+            option = pedirInt(
+                    "Ingrese la fecha que desea modificar : \n1. Fecha de Inico\n2. Fecha de Inicio de Inscripciones\n3. Fecha de Cierre de Inscripciones\n4. Volver",
+                    null);
+            if (option == 1) {
+                modificarFechaInicio();
+            }
+            if (option == 2) {
+                modificarFechaInicioInscripcion();
+            }
+            if (option == 3) {
+                modificarFechaCierreInscripcion();
+            }
+        } while (option != 4);
+    }
+
     public void modificarFechaInicio() {
         this.fechaInicioTorneo = pedirFechaHora("ingrese la nueva fecha de inicio y hora del torneo:  ", null);
     }
@@ -261,7 +286,8 @@ public class Torneo {
         }
         int[] resultados = { 0, 0, 0 };
         int codigo = pedirInt("ingrese el codigo del enfrentamiento: ", null);
-        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes,juradosEnfrentamiento, lugar, resultados, TipoEnfrentamiento.PENDIENTE,codigo,"");
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento,
+                lugar, resultados, TipoEnfrentamiento.PENDIENTE, codigo, "");
         enfrentamientos.add(enfrentamiento);
     }
 
@@ -495,7 +521,7 @@ public class Torneo {
             }
             if (situ.equalsIgnoreCase("EN JUEGO")) {
                 enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.EN_JUEGO);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "estado no valido");
             }
 
@@ -542,12 +568,17 @@ public class Torneo {
     public void verEquipos() {
 
         String msj = "";
+
         for (int i = 0; i < equipos.size(); i++) {
-            String compil = "\n" + equipos.get(i);
+            ArrayList<Representante> equipo = equipos.get(i);
+            String listaEquipo="Representante ";
+           for (int j = 0; j < equipo.size(); j++) {
+            listaEquipo+=equipo.get(j).toString()+"\n";
+           }
+            String compil = "\n\n" + nombresEquipos.get(i) + " : " +listaEquipo;
             msj += compil;
 
         }
-        JOptionPane.showInputDialog(msj);
         JOptionPane.showMessageDialog(null, msj);
 
     }
@@ -558,7 +589,7 @@ public class Torneo {
 
         String msj = "";
         for (int i = 0; i < jurados.size(); i++) {
-            msj += jurados.get(i) + "\n";
+            msj += jurados.get(i).toString() + "\n\n";
 
         }
         JOptionPane.showMessageDialog(null, msj);

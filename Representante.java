@@ -15,6 +15,12 @@ public class Representante extends Persona {
         this.equipo = equipo;
     }
 
+    @Override
+    public String toString() {
+        return  super.toString()+" del equipo " + equipo;
+    }
+
+    
     
     
 }

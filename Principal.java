@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -11,6 +12,8 @@ import javax.swing.JOptionPane;
  */
 
 public class Principal {
+    static ArrayList<Torneo> torneos = new ArrayList<>();
+
     public static void main(String[] args) {
         // el menu va a ser de la siguiente manera:
 
@@ -41,93 +44,100 @@ public class Principal {
          * 
          */
 
-        int op = 0;
+        int optionPrincipal = 0;
         do {
-            op = Integer.parseInt(pedir("1. Crear torneo\n 2. Entrar al torneo\n 3. salir", null));
+            optionPrincipal = pedirInt("1. Crear torneo\n 2. Entrar al torneo\n 3. salir", null);
 
-            if (op == 1) {
-                String nombre = pedir("ingrese el nombre del torneo", null);
-                LocalDateTime fecha = pedirFechaHora("ingrese la fecha y hora del torneo", null);
+            if (optionPrincipal == 1) {
+                String nombre = "";
+                do {
+                    nombre = pedir("ingrese el nombre del torneo", null);
+                    if (existeTorneoNombre(nombre)) {
+                        JOptionPane.showMessageDialog(null, "El nombre de ese torneo ya exite, intente otro por favor");
+                    }
+                } while (existeTorneoNombre(nombre));
+
+                LocalDateTime fecha = pedirFechaHora("ingrese la fecha y hora del inicio del torneo", null);
                 int limiteEdad = pedirInt("Ingrese la edad minima para participar", null);
                 String deporte = pedir("ingrese el deporte del torneo", null);
                 int limiteJugador = pedirInt("Ingrese el numero de jugadores maximo", null);
-                String gen = pedir("ingrese el genero del torneo: \nMASCULINO \nFEMENINO \nMIXTO;", null);
-                Genero genero = null;
-                do {
+                Genero genero = pedirGenero();
+                TipoTorneo tipoTorneo = pedirTipoTorneo();
+                LocalDateTime fechaInicioIncripciones = pedirFechaHora("Ingrese la fecha de Inicio de Incripciones",
+                        null);
+                LocalDateTime fechaCierreIncripciones = pedirFechaHora("Ingrese la fecha del Cierre de Inscripciones",
+                        null);
+                float precioInscripcion = pedirFloat("Ingrese el valor de incripcion", null);
 
-                    if (gen.equalsIgnoreCase("MASCULINO")) {
-                        genero = Genero.MASCULINO;
-                    }
-                    if (gen.equalsIgnoreCase("FEMENINO")) {
-                        genero = Genero.FEMENINO;
-                    }
-                    if (gen.equalsIgnoreCase("MIXTO")) {
-                        genero = Genero.MIXTO;
-                    }
-                } while (genero == null);
-
-                Torneo torneo = new Torneo(nombre, fecha, limiteEdad, deporte, limiteJugador, genero, null, null, null,
-                        op);
+                Torneo torneo = new Torneo(nombre, fecha, limiteEdad, deporte, limiteJugador, genero, tipoTorneo,
+                        fechaInicioIncripciones, fechaCierreIncripciones,
+                        precioInscripcion);
+                torneos.add(torneo);
 
             }
-            if (op == 2) {
+            if (optionPrincipal == 2) {
 
-                int option = 0;
-                do {
-                    option = Integer.parseInt(pedir(
-                            "1. Añadir equipo\n 2. modificar fechas\n 3. enfrentamientos\n 4. equipos\n 5. jueces\n 6. volver",
-                            null));
+                String nombreTorneo = pedir("Ingrese el nombre del torneo a observar", null);
+                if (existeTorneoNombre(nombreTorneo)) {
+                    int indiceTorneo = indiceTorneo(nombreTorneo);
 
-                    if (option == 1) {
+                    int optionSecundaria = 0;
+                    do {
+                        optionSecundaria = pedirInt(
+                                "1. Añadir equipo\n 2. modificar fechas\n 3. enfrentamientos\n 4. ver equipos\n 5. ver jueces\n6. aniadir juez\n 7. volver",
+                                null);
 
-                    }
-                    if (option == 2) {
-
-                    }
-                    if (option == 3) {
-                        int optionn = 0;
-
-                        do {
-                            optionn = Integer.parseInt(pedir(
-                                    "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. volver",
-                                    null));
-                        } while (optionn != 6);
-
-                        if (option == 4) {
-
+                        if (optionSecundaria == 1) {
+                            torneos.get(indiceTorneo).añadirEquipo();
                         }
-                        if (option == 5) {
-
+                        if (optionSecundaria == 2) {
+                            torneos.get(indiceTorneo).modificarFechaMenu();
                         }
-                        if (option == 6) {
+                        if (optionSecundaria == 3) {
+                            int optionTerciaria = 0;
 
+                            do {
+                                optionTerciaria = pedirInt(
+                                        "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. volver",
+                                        null);
+
+                                if (optionTerciaria == 1) {
+                                    torneos.get(indiceTorneo).mostrarEnfrentamientos();
+                                }
+                                if (optionTerciaria == 2) {
+                                    torneos.get(indiceTorneo).buscarPorEquipos();
+                                }
+                                if (optionTerciaria == 3) {
+                                    torneos.get(indiceTorneo).enfrentamientoJuez();
+                                }
+                                if (optionTerciaria == 4) {
+                                    torneos.get(indiceTorneo).resultadosEnfrentamientos();
+                                }
+                                if (optionTerciaria == 5) {
+                                    torneos.get(indiceTorneo).modificarEnfrentamientos();
+                                }
+                            } while (optionTerciaria != 6);
                         }
-                        if (option == 4) {
-
+                        if (optionSecundaria == 4) {
+                            torneos.get(indiceTorneo).verEquipos();
                         }
-                        if (option == 5) {
-
+                        if (optionSecundaria == 5) {
+                            torneos.get(indiceTorneo).verJueces();
                         }
-                        if (option == 6) {
-
+                        if (optionSecundaria == 6) {
+                            torneos.get(indiceTorneo).añadirJuez();
                         }
-                    }
-                    if (option == 4) {
 
-                    }
-                    if (option == 5) {
+                    } while (optionSecundaria != 7);
 
-                    }
-                    if (option == 6) {
-
-                    }
-                } while (option != 6);
-
+                } else {
+                    JOptionPane.showMessageDialog(null, "Torneo buscado no encontrado");
+                }
+                if (optionPrincipal == 3) {
+                    System.exit(0);
+                }
             }
-            if (op == 3) {
-                System.exit(0);
-            }
-        } while (op != 3);
+        } while (optionPrincipal != 3);
 
     }
 
@@ -146,7 +156,7 @@ public class Principal {
         }
     }
 
-    public float pedirFloat(String msj, String text) {
+    public static float pedirFloat(String msj, String text) {
         String numero = pedir(msj, text);
         try {
             float numTrue = Float.parseFloat(numero);
@@ -159,7 +169,7 @@ public class Principal {
 
     public static LocalDateTime pedirFechaHora(String msj, String text) {
         String fecha = JOptionPane.showInputDialog(null,
-                msj + "en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
+                msj + " en este formato con barras, puntos y comas (YYYY/MM/DD, HH:mm)", text);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd, HH:mm");
             LocalDateTime fechaHecha = LocalDateTime.parse(fecha, formatter);
@@ -170,4 +180,71 @@ public class Principal {
 
     }
 
+    public static TipoTorneo pedirTipoTorneo() {
+        TipoTorneo torneo = null;
+        do {
+            String textTorneo = pedir("Ingrese el tipo de torneo: \nLOCAL \nREGIONAL \nNACIONAL\nMUNDIAL", null);
+            if (textTorneo.equalsIgnoreCase("LOCAL")) {
+                torneo = TipoTorneo.LOCAL;
+            }
+            if (textTorneo.equalsIgnoreCase("REGIONAL")) {
+                torneo = TipoTorneo.REGIONAL;
+            }
+            if (textTorneo.equalsIgnoreCase("NACIONAL")) {
+                torneo = TipoTorneo.NACIONAL;
+            }
+            if (textTorneo.equalsIgnoreCase("MUNDIAL")) {
+                torneo = TipoTorneo.MUNDIAL;
+            }
+            if (torneo == null) {
+                JOptionPane.showMessageDialog(null, "Tipo Ingresado invalido");
+            }
+        } while (torneo == null);
+        return torneo;
+    }
+
+    public static Genero pedirGenero() {
+        Genero genero = null;
+        do {
+            String generoString = pedir("Ingrese el genero del torneo: \n" + //
+                    "MASCULINO \n" + //
+                    "FEMENINO \n" + //
+                    "MIXTO", null);
+            if (generoString.equalsIgnoreCase("MASCULINO")) {
+                genero = Genero.MASCULINO;
+            }
+            if (generoString.equalsIgnoreCase("FEMENINO")) {
+                genero = Genero.FEMENINO;
+            }
+            if (generoString.equalsIgnoreCase("MIXTO")) {
+                genero = Genero.MIXTO;
+            }
+            if (genero == null) {
+                JOptionPane.showMessageDialog(null, "Tipo Ingresado invalido");
+            }
+        } while (genero == null);
+        return genero;
+    }
+
+    public static boolean existeTorneoNombre(String nombreTorneo) {
+        boolean estaTorneo = false;
+        for (int i = 0; i < torneos.size() && !estaTorneo; i++) {
+            if (nombreTorneo.equalsIgnoreCase(torneos.get(i).getNombre())) {
+                estaTorneo = true;
+            }
+        }
+        return estaTorneo;
+    }
+
+    public static int indiceTorneo(String nombreTorneo) {
+        boolean estaTorneo = false;
+        int indice = -1;
+        for (int i = 0; i < torneos.size() && !estaTorneo; i++) {
+            if (nombreTorneo.equalsIgnoreCase(torneos.get(i).getNombre())) {
+                estaTorneo = true;
+                indice = i;
+            }
+        }
+        return indice;
+    }
 }

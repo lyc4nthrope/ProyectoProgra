@@ -53,6 +53,11 @@ public class Persona {
         this.genero = genero;
     }
 
+    @Override
+    public String toString() {
+        return nombre+" ("+genero+")" + " con " + edad + " de edad, email : " + email + " , numero de Celular= " + numeroCelular;
+    }
+
     
 
     
