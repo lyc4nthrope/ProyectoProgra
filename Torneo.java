@@ -287,7 +287,7 @@ public class Torneo {
                 codigo =pedirInt("ingrese el codigo del enfrentamiento: ", null);
             } while (existeCodigo(codigo));
         }
-        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, jurados, lugar, TipoEnfrentamiento.PENDIENTE, codigo, listanombres);
+        Enfrentamiento enfrentamiento = new Enfrentamiento(fechaEnfrantamiento, contrincantes, juradosEnfrentamiento, lugar, TipoEnfrentamiento.PENDIENTE, codigo, listanombres);
         enfrentamientos.add(enfrentamiento);
     }
     public boolean existeCodigo(int codigo){
@@ -466,7 +466,6 @@ public class Torneo {
             int indiceEnfrentamiento = indiceEnfrentamientoCodigo(anti);
             if (situ.equalsIgnoreCase("FINALIZADO")) {
                 int resul = Integer.parseInt(JOptionPane.showInputDialog("hubo un ganador: \n" + "1. Si \n" + "2. No"));
-                enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.FINALIZADO);
                 if (resul == 1) {
                     String ganador = JOptionPane.showInputDialog("Ingrese el nombre del equipo ganador");
                     ArrayList<ArrayList> contrincantes = enfrentamientos.get(indiceEnfrentamiento).getContrincantes();
@@ -478,13 +477,16 @@ public class Torneo {
                         int indexEquipPerdedor = indiceEquipo(equipoDos.get(0).getEquipo());
                         resultadosEquipos.get(indexEquipGanador)[0] += 1;
                         resultadosEquipos.get(indexEquipPerdedor)[2] += 1;
+                        enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.FINALIZADO);
                     }
                     if (ganador.equals(equipoDos.get(0).getEquipo())) {
                         int indexEquipGanador = indiceEquipo(ganador);
                         int indexEquipPerdedor = indiceEquipo(equipo.get(0).getEquipo());
                         resultadosEquipos.get(indexEquipGanador)[0] += 1;
                         resultadosEquipos.get(indexEquipPerdedor)[2] += 1;
-                    } else {
+                        enfrentamientos.get(indiceEnfrentamiento).setTipoEnfrentamiento(TipoEnfrentamiento.FINALIZADO);
+                    }
+                    if(enfrentamientos.get(indiceEnfrentamiento).getTipoEnfrentamiento()==TipoEnfrentamiento.FINALIZADO){
                         JOptionPane.showMessageDialog(null,
                                 "el equipo ingresado no pertenece al enfrentamiento");
                     }
@@ -572,7 +574,18 @@ public class Torneo {
 
     }
 
+    
+
     // ver jueces
+
+    @Override
+    public String toString() {
+        return "Torneo : " + nombreTorneo + ", fecha deInicio del Torneo= " + fechaInicioTorneo + ", limite de Edad= "
+                + limiteEdad + ", Deporte= " + tipoDeporte + ", genero del torneo= " + genero + ", Torneo " + tipoTorneo
+                + ", fecha de Inscripcion= " + fechaInscripcion + ", fecha de Cierre de Inscripciones= " + fechaCierreInscripcion
+                + ", valor de la Inscripcion= " + valorInscripcion+" , tiene "+equipos.size()+" equipos"
+                +" con "+enfrentamientos.size()+" enfrentamientos y con "+jurados.size()+" jueces"+"\n\n" ;
+    }
 
     public void verJueces() {
 

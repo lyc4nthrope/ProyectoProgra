@@ -250,4 +250,11 @@ public class Principal {
         }
         return indice;
     }
+    public static void verTorneos(){
+        String listaTorneos = "";
+        for (Torneo torneo : torneos) {
+            listaTorneos+=torneo.toString();
+        }
+        JOptionPane.showMessageDialog(null, listaTorneos);
+    }
 }
