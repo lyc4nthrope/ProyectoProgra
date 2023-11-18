@@ -46,7 +46,7 @@ public class Principal {
 
         int optionPrincipal = 0;
         do {
-            optionPrincipal = pedirInt("1. Crear torneo\n 2. Entrar al torneo\n 3. salir", null);
+            optionPrincipal = pedirInt("1. Crear torneo\n 2. Entrar al torneo\n 3. ver torneos\n 4. salir", null);
 
             if (optionPrincipal == 1) {
                 String nombre = "";
@@ -136,11 +136,14 @@ public class Principal {
                 } else {
                     JOptionPane.showMessageDialog(null, "Torneo buscado no encontrado");
                 }
-                if (optionPrincipal == 3) {
+                if (optionPrincipal==3) {
+                    verTorneos();
+                }
+                if (optionPrincipal == 4) {
                     System.exit(0);
                 }
             }
-        } while (optionPrincipal != 3);
+        } while (optionPrincipal != 4);
 
     }
 
