@@ -6,18 +6,16 @@ public class Enfrentamiento {
     private ArrayList<ArrayList> contrincantes;
     private ArrayList<Jurado> jueces;
     private String lugar;
-    private int[] resultados = new int[3];
     private TipoEnfrentamiento tipoEnfrentamiento;
     private int codigo;
     private String razon;
 
     public Enfrentamiento(LocalDateTime fechaInicio, ArrayList<ArrayList> contrincantes, ArrayList<Jurado> jueces,
-            String lugar, int[] resultados, TipoEnfrentamiento tipoEnfrentamiento, int codigo, String razon) {
+            String lugar, TipoEnfrentamiento tipoEnfrentamiento, int codigo, String razon) {
         this.fechaInicio = fechaInicio;
         this.contrincantes = contrincantes;
         this.jueces = jueces;
         this.lugar = lugar;
-        this.resultados = resultados;
         this.tipoEnfrentamiento = tipoEnfrentamiento;
         this.codigo = codigo;
         this.razon = razon;
@@ -64,14 +62,6 @@ public class Enfrentamiento {
         this.lugar = lugar;
     }
 
-    public int[] getResultados() {
-        return resultados;
-    }
-
-    public void setResultados(int[] resultados) {
-        this.resultados = resultados;
-    }
-
     public TipoEnfrentamiento getTipoEnfrentamiento() {
         return tipoEnfrentamiento;
     }
@@ -95,9 +85,17 @@ public class Enfrentamiento {
         for (Jurado juez : jueces) {
             nombreJurados = nombreJurados + juez.getNombre() + ", ";
         }
-        return (equipo1.get(0).getEquipo() + " vs " + equipo2.get(0).getEquipo() + " en "
+        if (tipoEnfrentamiento==TipoEnfrentamiento.APLAZADO) {
+          return (equipo1.get(0).getEquipo() + " vs " + equipo2.get(0).getEquipo() + " en "
                 + lugar + ", en la fecha de " + fechaInicio + " con los jueces [" + nombreJurados
-                + "] y el enfrentamiento esta " + tipoEnfrentamiento + ", " + razon + "\n\n");
+                + "] y el enfrentamiento esta " + tipoEnfrentamiento + ", Razon : " + razon + "\n\n");  
+        }
+        else{
+            return (equipo1.get(0).getEquipo() + " vs " + equipo2.get(0).getEquipo() + " en "
+                + lugar + ", en la fecha de " + fechaInicio + " con los jueces [" + nombreJurados
+                + "] y el enfrentamiento esta " + tipoEnfrentamiento +"\n\n");
+        }
+        
     }
 
 }

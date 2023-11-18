@@ -98,7 +98,7 @@ public class Principal {
 
                             do {
                                 optionTerciaria = pedirInt(
-                                        "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. volver",
+                                        "1. general\n 2. buscar por equipos\n 3. buscar por juez\n 4. resultados\n 5. modificar enfrentamientos\n 6. Crear Enfrentamiento\n7. Volver",
                                         null);
 
                                 if (optionTerciaria == 1) {
@@ -116,7 +116,10 @@ public class Principal {
                                 if (optionTerciaria == 5) {
                                     torneos.get(indiceTorneo).modificarEnfrentamientos();
                                 }
-                            } while (optionTerciaria != 6);
+                                if (optionTerciaria==6) {
+                                    torneos.get(indiceTorneo).crearEnfrentamientos();
+                                }
+                            } while (optionTerciaria != 7);
                         }
                         if (optionSecundaria == 4) {
                             torneos.get(indiceTorneo).verEquipos();

@@ -17,7 +17,7 @@ public class Jurado extends Persona {
 
     @Override
     public String toString() {
-        return super.toString()+" , licencia :" + licencia;
+        return super.toString()+" , licencia : " + licencia;
     }
 
     
